@@ -58,7 +58,7 @@ class TagServiceTest {
     void checkGetShouldReturnDto(Tag tag) {
         long tagId = tag.getId();
         Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
-        doReturn(optionalTag).when(this.tagRepository).get(tagId);
+        doReturn(optionalTag).when(this.tagRepository).getById(tagId);
 
         Tag tagFromDb = this.tagService.get(tagId);
 
@@ -68,7 +68,7 @@ class TagServiceTest {
     @Test
     @DisplayName("Getting tag dto by id with throwing EssenceNotFoundException")
     void checkGetShouldThrowEssenceNotFoundException() {
-        doReturn(Optional.empty()).when(this.tagRepository).get(anyLong());
+        doReturn(Optional.empty()).when(this.tagRepository).getById(anyLong());
 
         assertThatThrownBy(() -> this.tagService.get(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);
@@ -118,7 +118,7 @@ class TagServiceTest {
     @Test
     @DisplayName("Deleting dto tag should throw EssenceNotFoundException")
     void checkDeleteShouldThrowEssenceNotFoundException() {
-        doReturn(Optional.empty()).when(this.tagRepository).get(anyLong());
+        doReturn(Optional.empty()).when(this.tagRepository).getById(anyLong());
 
         assertThatThrownBy(() -> this.tagService.delete(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);

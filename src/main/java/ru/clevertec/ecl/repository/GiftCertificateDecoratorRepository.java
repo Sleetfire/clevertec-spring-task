@@ -3,7 +3,6 @@ package ru.clevertec.ecl.repository;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -61,8 +60,8 @@ public class GiftCertificateDecoratorRepository implements IGiftCertificateRepos
     }
 
     @Override
-    public Optional<GiftCertificateEntity> get(long id) {
-        return this.giftCertificateRepository.get(id);
+    public Optional<GiftCertificateEntity> getById(long id) {
+        return this.giftCertificateRepository.getById(id);
     }
 
     @Override
@@ -133,7 +132,7 @@ public class GiftCertificateDecoratorRepository implements IGiftCertificateRepos
                     long tagId = tag.getId();
                     String tagName = tag.getName();
                     if (tagId != 0) {
-                        Optional<TagEntity> tagOptional = this.tagRepository.get(tagId);
+                        Optional<TagEntity> tagOptional = this.tagRepository.getById(tagId);
                         if (tagOptional.isPresent()) {
                             this.tagRepository.update(tagId, tag);
                         }

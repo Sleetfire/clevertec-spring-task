@@ -49,7 +49,7 @@ public class GiftCertificateRepository implements IGiftCertificateRepository {
     }
 
     @Override
-    public Optional<GiftCertificateEntity> get(long id) {
+    public Optional<GiftCertificateEntity> getById(long id) {
         MapSqlParameterSource paramMap = new MapSqlParameterSource();
         paramMap.addValue("id", id);
         String sqlSelectQuery = "select * from find_certificates()" + "\nWHERE id IN (\n" +

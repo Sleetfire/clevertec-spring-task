@@ -36,7 +36,7 @@ public class GiftCertificateService implements IGiftCertificateService {
 
     @Override
     public GiftCertificate get(long id) {
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.get(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
         if (optionalGiftCertificate.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
                     40401));

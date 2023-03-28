@@ -1,6 +1,5 @@
 package ru.clevertec.ecl.repository;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,7 +55,7 @@ class TagRepositoryTest {
     @DisplayName("Getting tag entity by id")
     void checkGetByIdShouldReturnOptional(TagEntity tagEntity) {
         long id = this.tagRepository.create(tagEntity);
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.get(id);
+        Optional<TagEntity> optionalTagEntity = this.tagRepository.getById(id);
         tagEntity.setId(id);
         assertThat(optionalTagEntity).hasValue(tagEntity);
     }
@@ -64,7 +63,7 @@ class TagRepositoryTest {
     @Test
     @DisplayName("Getting tag entity by id should return empty Optional")
     void checkGetByIdShouldReturnEmptyOptional() {
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.get(1L);
+        Optional<TagEntity> optionalTagEntity = this.tagRepository.getById(1L);
         assertThat(optionalTagEntity).isEmpty();
     }
 
@@ -112,7 +111,7 @@ class TagRepositoryTest {
         TagEntity updated = TagEntity.builder().name("last_tag").build();
         long updatedTagId = this.tagRepository.update(id, updated);
         updated.setId(updatedTagId);
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.get(updatedTagId);
+        Optional<TagEntity> optionalTagEntity = this.tagRepository.getById(updatedTagId);
         assertThat(optionalTagEntity).hasValue(updated);
     }
 
@@ -122,7 +121,7 @@ class TagRepositoryTest {
     void checkDelete(TagEntity tagEntity) {
         long id = this.tagRepository.create(tagEntity);
         this.tagRepository.delete(id);
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.get(id);
+        Optional<TagEntity> optionalTagEntity = this.tagRepository.getById(id);
         assertThat(optionalTagEntity).isEmpty();
     }
 
@@ -132,7 +131,7 @@ class TagRepositoryTest {
     void checkDeleteAll(TagEntity tagEntity) {
         long id = this.tagRepository.create(tagEntity);
         this.tagRepository.delete();
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.get(id);
+        Optional<TagEntity> optionalTagEntity = this.tagRepository.getById(id);
         assertThat(optionalTagEntity).isEmpty();
     }
 

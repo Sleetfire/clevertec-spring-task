@@ -39,7 +39,7 @@ public class TagService implements ITagService {
 
     @Override
     public Tag get(long id) {
-        Optional<TagEntity> optionalTag = this.tagRepository.get(id);
+        Optional<TagEntity> optionalTag = this.tagRepository.getById(id);
         if (optionalTag.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
                     40401));

@@ -38,7 +38,7 @@ public class TagRepository implements ITagRepository {
     }
 
     @Override
-    public Optional<TagEntity> get(long id) {
+    public Optional<TagEntity> getById(long id) {
         String sqlSelectQuery = "select * from ecl.tags where id = :id";
         MapSqlParameterSource paramMap = new MapSqlParameterSource();
         paramMap.addValue("id", id);

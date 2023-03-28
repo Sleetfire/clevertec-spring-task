@@ -25,7 +25,7 @@ public interface ICrudRepository<T> {
      * @param id entity's id
      * @return entity in Optional wrapper
      */
-    Optional<T> get(long id);
+    Optional<T> getById(long id);
 
     /**
      * Method for getting all entities

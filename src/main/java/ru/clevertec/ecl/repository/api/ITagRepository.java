@@ -24,7 +24,7 @@ public interface ITagRepository extends ICrudRepository<TagEntity> {
      * @return TagEntity in Optional wrapper
      */
     @Override
-    Optional<TagEntity> get(long id);
+    Optional<TagEntity> getById(long id);
 
     /**
      * Method for getting all TagEntities

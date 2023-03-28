@@ -29,7 +29,7 @@ public interface IGiftCertificateRepository extends ICrudRepository<GiftCertific
      * @return GiftCertificateEntity in Optional wrapper
      */
     @Override
-    Optional<GiftCertificateEntity> get(long id);
+    Optional<GiftCertificateEntity> getById(long id);
 
     /**
      * Method for getting all GiftCertificateEntities

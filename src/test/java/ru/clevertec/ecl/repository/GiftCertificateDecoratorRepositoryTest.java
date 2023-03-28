@@ -1,6 +1,5 @@
 package ru.clevertec.ecl.repository;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,9 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.config.SpringTestJdbcConfig;
-import ru.clevertec.ecl.dto.GiftCertificate;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
-import ru.clevertec.ecl.dto.Tag;
 import ru.clevertec.ecl.repository.api.IGiftCertificateRepository;
 import ru.clevertec.ecl.repository.entity.GiftCertificateEntity;
 import ru.clevertec.ecl.repository.entity.TagEntity;
@@ -66,14 +63,14 @@ class GiftCertificateDecoratorRepositoryTest {
     void checkGetByIdShouldReturnOptional(GiftCertificateEntity giftCertificateEntity) {
         long id = this.giftCertificateRepository.create(giftCertificateEntity);
         giftCertificateEntity.setId(id);
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.get(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
         assertThat(optionalGiftCertificate).hasValue(giftCertificateEntity);
     }
 
     @Test
     @DisplayName("Getting by gift certificate entity should return empty Optional")
     void checkGetByIdShouldReturnEmptyOptional() {
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.get(1L);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(1L);
         assertThat(optionalGiftCertificate).isEmpty();
     }
 
@@ -143,7 +140,7 @@ class GiftCertificateDecoratorRepositoryTest {
 
         this.giftCertificateRepository.update(id, updated);
 
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.get(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
         if (optionalGiftCertificate.isEmpty()) {
             return;
         }
@@ -158,7 +155,7 @@ class GiftCertificateDecoratorRepositoryTest {
     void checkDeleteById(GiftCertificateEntity giftCertificateEntity) {
         long id = this.giftCertificateRepository.create(giftCertificateEntity);
         this.giftCertificateRepository.delete(id);
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.get(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
         assertThat(optionalGiftCertificate).isEmpty();
     }
 
@@ -168,7 +165,7 @@ class GiftCertificateDecoratorRepositoryTest {
     void checkDeleteAll(GiftCertificateEntity giftCertificateEntity) {
         long id = this.giftCertificateRepository.create(giftCertificateEntity);
         this.giftCertificateRepository.delete();
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.get(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
         assertThat(optionalGiftCertificate).isEmpty();
     }
 
