@@ -2,7 +2,10 @@ package ru.clevertec.ecl.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.clevertec.ecl.json.deserializer.DurationDeserializer;
 import ru.clevertec.ecl.json.serializer.DurationSerializer;
 
