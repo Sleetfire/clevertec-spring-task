@@ -10,7 +10,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface GiftCertificateMapper {
     GiftCertificateMapper INSTANCE = Mappers.getMapper(GiftCertificateMapper.class);
+
     GiftCertificate toDto(GiftCertificateEntity giftCertificateEntity);
+
     GiftCertificateEntity toEntity(GiftCertificate giftCertificate);
 
     List<GiftCertificate> toDto(List<GiftCertificateEntity> giftCertificates);
