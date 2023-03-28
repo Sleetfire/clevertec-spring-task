@@ -60,7 +60,7 @@ class TagServiceTest {
         Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
         doReturn(optionalTag).when(this.tagRepository).getById(tagId);
 
-        Tag tagFromDb = this.tagService.get(tagId);
+        Tag tagFromDb = this.tagService.getById(tagId);
 
         assertThat(tagFromDb).isEqualTo(tag);
     }
@@ -70,7 +70,7 @@ class TagServiceTest {
     void checkGetShouldThrowEssenceNotFoundException() {
         doReturn(Optional.empty()).when(this.tagRepository).getById(anyLong());
 
-        assertThatThrownBy(() -> this.tagService.get(anyLong()))
+        assertThatThrownBy(() -> this.tagService.getById(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 

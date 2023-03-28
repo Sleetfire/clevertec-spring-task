@@ -39,7 +39,7 @@ public class GiftCertificateController {
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<GiftCertificate> get(@PathVariable long id) {
-        return new ResponseEntity<>(this.giftCertificateService.get(id), HttpStatus.OK);
+        return new ResponseEntity<>(this.giftCertificateService.getById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = {"", "/"}, produces = {MediaType.APPLICATION_JSON_VALUE})

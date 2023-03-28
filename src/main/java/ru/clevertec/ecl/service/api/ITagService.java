@@ -26,7 +26,7 @@ public interface ITagService extends ICrudService<Tag> {
      * @return Tag entity
      */
     @Override
-    Tag get(long id);
+    Tag getById(long id);
 
     /**
      * Method for getting all Tag entities

@@ -36,7 +36,7 @@ public class TagController {
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Tag> get(@PathVariable long id) {
-        return new ResponseEntity<>(this.tagService.get(id), HttpStatus.OK);
+        return new ResponseEntity<>(this.tagService.getById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = {"", "/"}, produces = {MediaType.APPLICATION_JSON_VALUE})

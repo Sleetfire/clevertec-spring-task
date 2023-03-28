@@ -24,7 +24,7 @@ public interface ICrudService<T> {
      * @param id entity's id
      * @return entity
      */
-    T get(long id);
+    T getById(long id);
 
     /**
      * Method for getting all entities
