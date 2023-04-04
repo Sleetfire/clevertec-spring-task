@@ -9,9 +9,9 @@ import java.util.Optional;
 /**
  * Interface {@code IGiftCertificateRepository} defines methods for CRUD operations with GiftCertificateEntity
  *
- * @version 0.1
+ * @version 1.0
  */
-public interface IGiftCertificateRepository extends ICrudRepository<GiftCertificateEntity> {
+public interface IGiftCertificateRepository extends ICrudRepository<Long, GiftCertificateEntity> {
 
     /**
      * Method for creating GiftCertificateEntity
@@ -20,7 +20,7 @@ public interface IGiftCertificateRepository extends ICrudRepository<GiftCertific
      * @return created GiftCertificateEntity's id
      */
     @Override
-    long create(GiftCertificateEntity entity);
+    Long create(GiftCertificateEntity entity);
 
     /**
      * Method for getting GiftCertificateEntity by id
@@ -29,7 +29,7 @@ public interface IGiftCertificateRepository extends ICrudRepository<GiftCertific
      * @return GiftCertificateEntity in Optional wrapper
      */
     @Override
-    Optional<GiftCertificateEntity> getById(long id);
+    Optional<GiftCertificateEntity> getById(Long id);
 
     /**
      * Method for getting all GiftCertificateEntities
@@ -47,7 +47,7 @@ public interface IGiftCertificateRepository extends ICrudRepository<GiftCertific
      * @return updated GiftCertificateEntity's id
      */
     @Override
-    long update(long id, GiftCertificateEntity updatedEntity);
+    Long update(Long id, GiftCertificateEntity updatedEntity);
 
     /**
      * Method for deleting GiftCertificateEntity by id
@@ -55,7 +55,7 @@ public interface IGiftCertificateRepository extends ICrudRepository<GiftCertific
      * @param id entity's id
      */
     @Override
-    void delete(long id);
+    void delete(Long id);
 
     /**
      * Method for getting all GiftCertificateEntities with filter
