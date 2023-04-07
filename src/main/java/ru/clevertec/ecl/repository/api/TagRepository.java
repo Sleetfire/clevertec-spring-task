@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * Interface {@code ITagRepository} defines methods for CRUD operations with TagEntity
  */
-public interface ITagRepository extends ICrudRepository<TagEntity> {
+public interface TagRepository extends CrudRepository<TagEntity> {
 
     /**
      * Method for creating TagEntity

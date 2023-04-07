@@ -12,7 +12,7 @@ import ru.clevertec.ecl.dto.Tag;
 import ru.clevertec.ecl.exception.EssenceExistException;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.TagMapper;
-import ru.clevertec.ecl.repository.TagRepository;
+import ru.clevertec.ecl.repository.impl.TagRepositoryImpl;
 import ru.clevertec.ecl.repository.entity.TagEntity;
 import ru.clevertec.ecl.service.impl.TagServiceImpl;
 
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 class TagServiceImplTest {
 
     @Mock
-    private TagRepository tagRepository;
+    private TagRepositoryImpl tagRepositoryImpl;
 
     @InjectMocks
     private TagServiceImpl tagServiceImpl;
@@ -47,7 +47,7 @@ class TagServiceImplTest {
     void checkCreateShouldThrowEssenceExistException(Tag tag) {
         String tagName = tag.getName();
         Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
-        doReturn(optionalTag).when(this.tagRepository).getByName(tagName);
+        doReturn(optionalTag).when(this.tagRepositoryImpl).getByName(tagName);
 
         assertThatThrownBy(() -> this.tagServiceImpl.create(tag))
                 .isInstanceOf(EssenceExistException.class);
@@ -59,7 +59,7 @@ class TagServiceImplTest {
     void checkGetShouldReturnDto(Tag tag) {
         long tagId = tag.getId();
         Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
-        doReturn(optionalTag).when(this.tagRepository).getById(tagId);
+        doReturn(optionalTag).when(this.tagRepositoryImpl).getById(tagId);
 
         Tag tagFromDb = this.tagServiceImpl.findById(tagId);
 
@@ -69,7 +69,7 @@ class TagServiceImplTest {
     @Test
     @DisplayName("Getting tag dto by id with throwing EssenceNotFoundException")
     void checkGetShouldThrowEssenceNotFoundException() {
-        doReturn(Optional.empty()).when(this.tagRepository).getById(anyLong());
+        doReturn(Optional.empty()).when(this.tagRepositoryImpl).getById(anyLong());
 
         assertThatThrownBy(() -> this.tagServiceImpl.findById(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);
@@ -81,7 +81,7 @@ class TagServiceImplTest {
     void checkGetByNameShouldReturnDto(Tag tag) {
         String tagName = tag.getName();
         Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
-        doReturn(optionalTag).when(this.tagRepository).getByName(tagName);
+        doReturn(optionalTag).when(this.tagRepositoryImpl).getByName(tagName);
 
         Tag tagFromDb = this.tagServiceImpl.findByName(tagName);
 
@@ -91,7 +91,7 @@ class TagServiceImplTest {
     @Test
     @DisplayName("Getting tag dto by id should throw EssenceNotFoundException")
     void checkGetByNameShouldThrowEssenceNotFoundException() {
-        doReturn(Optional.empty()).when(this.tagRepository).getByName(anyString());
+        doReturn(Optional.empty()).when(this.tagRepositoryImpl).getByName(anyString());
         assertThatThrownBy(() -> this.tagServiceImpl.findByName(anyString()))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
@@ -101,7 +101,7 @@ class TagServiceImplTest {
     @DisplayName("Getting dto tag's list")
     void checkGetAllShouldReturnDtoList(List<Tag> tags) {
         List<TagEntity> tagEntities = TagMapper.INSTANCE.toEntity(tags);
-        doReturn(tagEntities).when(this.tagRepository).getAll();
+        doReturn(tagEntities).when(this.tagRepositoryImpl).getAll();
 
         List<Tag> tagsFromDb = this.tagServiceImpl.findAll();
         assertThat(tagsFromDb).hasSameElementsAs(tags);
@@ -110,7 +110,7 @@ class TagServiceImplTest {
     @Test
     @DisplayName("Getting dto tag's list should throw EssenceNotFoundException")
     void checkGetAllShouldThrowEssenceNotFoundException() {
-        doReturn(Collections.emptyList()).when(this.tagRepository).getAll();
+        doReturn(Collections.emptyList()).when(this.tagRepositoryImpl).getAll();
 
         assertThatThrownBy(() -> this.tagServiceImpl.findAll())
                 .isInstanceOf(EssenceNotFoundException.class);
@@ -119,7 +119,7 @@ class TagServiceImplTest {
     @Test
     @DisplayName("Deleting dto tag should throw EssenceNotFoundException")
     void checkDeleteShouldThrowEssenceNotFoundException() {
-        doReturn(Optional.empty()).when(this.tagRepository).getById(anyLong());
+        doReturn(Optional.empty()).when(this.tagRepositoryImpl).getById(anyLong());
 
         assertThatThrownBy(() -> this.tagServiceImpl.delete(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);

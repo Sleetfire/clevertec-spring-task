@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.repository;
+package ru.clevertec.ecl.repository.impl;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -7,7 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.clevertec.ecl.repository.api.ITagRepository;
+import ru.clevertec.ecl.repository.api.TagRepository;
 import ru.clevertec.ecl.repository.mappers.TagSQLMapper;
 import ru.clevertec.ecl.repository.util.QueryUtil;
 import ru.clevertec.ecl.repository.entity.TagEntity;
@@ -18,12 +18,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class TagRepository implements ITagRepository {
+public class TagRepositoryImpl implements TagRepository {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final Logger logger = LogManager.getLogger(TagRepository.class);
+    private static final Logger logger = LogManager.getLogger(TagRepositoryImpl.class);
 
-    public TagRepository(@Qualifier("dataSource") DataSource dataSource) {
+    public TagRepositoryImpl(@Qualifier("dataSource") DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 

@@ -16,7 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.config.SpringTestJdbcConfig;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
-import ru.clevertec.ecl.repository.api.IGiftCertificateRepository;
+import ru.clevertec.ecl.repository.api.GiftCertificateRepository;
 import ru.clevertec.ecl.repository.entity.GiftCertificateEntity;
 import ru.clevertec.ecl.repository.entity.TagEntity;
 import ru.clevertec.ecl.util.DateUtil;
@@ -34,11 +34,11 @@ import static org.assertj.core.api.Assertions.*;
 @Rollback
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-class GiftCertificateDecoratorRepositoryTest {
+class GiftCertificateDecoratorRepositoryImplTest {
 
     @Autowired
-    @Qualifier("giftCertificateDecoratorRepository")
-    private IGiftCertificateRepository giftCertificateRepository;
+    @Qualifier("giftCertificateDecoratorRepositoryImpl")
+    private GiftCertificateRepository giftCertificateRepository;
 
     @BeforeEach
     void setUp() {

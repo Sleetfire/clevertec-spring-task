@@ -7,7 +7,7 @@ import ru.clevertec.ecl.dto.Tag;
 import ru.clevertec.ecl.exception.EssenceExistException;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.TagMapper;
-import ru.clevertec.ecl.repository.api.ITagRepository;
+import ru.clevertec.ecl.repository.api.TagRepository;
 import ru.clevertec.ecl.repository.entity.TagEntity;
 
 import java.util.List;
@@ -17,9 +17,9 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class TagServiceImpl implements ru.clevertec.ecl.service.TagService {
 
-    private final ITagRepository tagRepository;
+    private final TagRepository tagRepository;
 
-    public TagServiceImpl(ITagRepository tagRepository) {
+    public TagServiceImpl(TagRepository tagRepository) {
         this.tagRepository = tagRepository;
     }
 

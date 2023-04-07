@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.repository;
+package ru.clevertec.ecl.repository.impl;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
-import ru.clevertec.ecl.repository.api.IGiftCertificateRepository;
+import ru.clevertec.ecl.repository.api.GiftCertificateRepository;
 import ru.clevertec.ecl.repository.mappers.GiftCertificateSQLMapper;
 import ru.clevertec.ecl.repository.util.EntityUtil;
 import ru.clevertec.ecl.repository.util.QueryUtil;
@@ -22,12 +22,12 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class GiftCertificateRepository implements IGiftCertificateRepository {
+public class GiftCertificateRepositoryImpl implements GiftCertificateRepository {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final Logger logger = LogManager.getLogger(GiftCertificateRepository.class);
+    private static final Logger logger = LogManager.getLogger(GiftCertificateRepositoryImpl.class);
 
-    public GiftCertificateRepository(@Qualifier("dataSource") DataSource dataSource) {
+    public GiftCertificateRepositoryImpl(@Qualifier("dataSource") DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 

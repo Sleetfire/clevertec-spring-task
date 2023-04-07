@@ -7,7 +7,7 @@ import ru.clevertec.ecl.dto.GiftCertificateFilter;
 import ru.clevertec.ecl.dto.SingleResponseError;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.GiftCertificateMapper;
-import ru.clevertec.ecl.repository.api.IGiftCertificateRepository;
+import ru.clevertec.ecl.repository.api.GiftCertificateRepository;
 import ru.clevertec.ecl.repository.entity.GiftCertificateEntity;
 import ru.clevertec.ecl.util.DateUtil;
 
@@ -17,10 +17,10 @@ import java.util.Optional;
 @Service
 public class GiftCertificateServiceImpl implements ru.clevertec.ecl.service.GiftCertificateService {
 
-    private final IGiftCertificateRepository giftCertificateRepository;
+    private final GiftCertificateRepository giftCertificateRepository;
 
-    public GiftCertificateServiceImpl(@Qualifier("giftCertificateDecoratorRepository")
-                                  IGiftCertificateRepository giftCertificateRepository) {
+    public GiftCertificateServiceImpl(@Qualifier("giftCertificateDecoratorRepositoryImpl")
+                                              GiftCertificateRepository giftCertificateRepository) {
         this.giftCertificateRepository = giftCertificateRepository;
     }
 

@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.repository;
+package ru.clevertec.ecl.repository.impl;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
 import ru.clevertec.ecl.dto.SingleResponseError;
 import ru.clevertec.ecl.exception.SqlException;
-import ru.clevertec.ecl.repository.api.IGiftCertificateRepository;
-import ru.clevertec.ecl.repository.api.ITagRepository;
+import ru.clevertec.ecl.repository.api.GiftCertificateRepository;
+import ru.clevertec.ecl.repository.api.TagRepository;
 import ru.clevertec.ecl.repository.util.QueryUtil;
 import ru.clevertec.ecl.repository.entity.GiftCertificateEntity;
 import ru.clevertec.ecl.repository.entity.TagEntity;
@@ -24,16 +24,16 @@ import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
-public class GiftCertificateDecoratorRepository implements IGiftCertificateRepository {
+public class GiftCertificateDecoratorRepositoryImpl implements GiftCertificateRepository {
 
-    private final IGiftCertificateRepository giftCertificateRepository;
-    private final ITagRepository tagRepository;
+    private final GiftCertificateRepository giftCertificateRepository;
+    private final TagRepository tagRepository;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final Logger logger = LogManager.getLogger(GiftCertificateDecoratorRepository.class);
+    private static final Logger logger = LogManager.getLogger(GiftCertificateDecoratorRepositoryImpl.class);
 
-    public GiftCertificateDecoratorRepository(@Qualifier("giftCertificateRepository") IGiftCertificateRepository giftCertificateRepository,
-                                              ITagRepository tagRepository,
-                                              DataSource dataSource) {
+    public GiftCertificateDecoratorRepositoryImpl(@Qualifier("giftCertificateRepositoryImpl") GiftCertificateRepository giftCertificateRepository,
+                                                  TagRepository tagRepository,
+                                                  DataSource dataSource) {
         this.giftCertificateRepository = giftCertificateRepository;
         this.tagRepository = tagRepository;
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);

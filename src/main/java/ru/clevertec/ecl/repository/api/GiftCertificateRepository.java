@@ -11,7 +11,7 @@ import java.util.Optional;
  *
  * @version 0.1
  */
-public interface IGiftCertificateRepository extends ICrudRepository<GiftCertificateEntity> {
+public interface GiftCertificateRepository extends CrudRepository<GiftCertificateEntity> {
 
     /**
      * Method for creating GiftCertificateEntity

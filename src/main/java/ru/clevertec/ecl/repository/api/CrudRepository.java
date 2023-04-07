@@ -9,7 +9,7 @@ import java.util.Optional;
  * @param <T> entity type
  * @version 0.1
  */
-public interface ICrudRepository<T> {
+public interface CrudRepository<T> {
 
     /**
      * Method for creating entity
