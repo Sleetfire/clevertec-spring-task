@@ -1,15 +1,14 @@
 package ru.clevertec.ecl.util;
 
+import lombok.experimental.UtilityClass;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+@UtilityClass
 public class DateUtil {
-
-    private DateUtil() {
-        throw new IllegalStateException("Utility class");
-    }
 
     public static String getCurrentDateISO8601() {
         TimeZone tz = TimeZone.getTimeZone("UTC");
