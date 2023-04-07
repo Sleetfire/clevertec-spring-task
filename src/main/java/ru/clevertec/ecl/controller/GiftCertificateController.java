@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.controller.rest;
+package ru.clevertec.ecl.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,7 +30,7 @@ public class GiftCertificateController {
         this.giftCertificateService = giftCertificateService;
     }
 
-    @PostMapping(value = {"", "/"},
+    @PostMapping(value = "/",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<GiftCertificate> create(@RequestBody GiftCertificate giftCertificate) {
@@ -42,7 +42,7 @@ public class GiftCertificateController {
         return new ResponseEntity<>(this.giftCertificateService.getById(id), HttpStatus.OK);
     }
 
-    @GetMapping(value = {"", "/"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<GiftCertificate>> getAll() {
         return new ResponseEntity<>(this.giftCertificateService.getAll(), HttpStatus.OK);
     }
@@ -58,14 +58,14 @@ public class GiftCertificateController {
         return new ResponseEntity<>(this.giftCertificateService.getAll(filter), HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/update/{id}",
+    @PatchMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<GiftCertificate> update(@PathVariable long id, @RequestBody GiftCertificate certificate) {
         return new ResponseEntity<>(this.giftCertificateService.update(id, certificate), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id) {
         this.giftCertificateService.delete(id);
