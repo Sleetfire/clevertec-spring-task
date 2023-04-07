@@ -34,11 +34,11 @@ public class TagService implements ITagService {
                     40001));
         }
         long tagId = this.tagRepository.create(TagMapper.INSTANCE.toEntity(tag));
-        return this.getById(tagId);
+        return this.findById(tagId);
     }
 
     @Override
-    public Tag getById(long id) {
+    public Tag findById(long id) {
         Optional<TagEntity> optionalTag = this.tagRepository.getById(id);
         if (optionalTag.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
@@ -48,7 +48,7 @@ public class TagService implements ITagService {
     }
 
     @Override
-    public Tag getByName(String name) {
+    public Tag findByName(String name) {
         Optional<TagEntity> optionalTag = this.tagRepository.getByName(name);
         if (optionalTag.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
@@ -58,7 +58,7 @@ public class TagService implements ITagService {
     }
 
     @Override
-    public List<Tag> getAll() {
+    public List<Tag> findAll() {
         List<TagEntity> tags = this.tagRepository.getAll();
         if (tags.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
@@ -70,15 +70,15 @@ public class TagService implements ITagService {
     @Override
     @Transactional
     public Tag update(long id, Tag updated) {
-        this.getById(id);
+        this.findById(id);
         this.tagRepository.update(id, TagMapper.INSTANCE.toEntity(updated));
-        return this.getById(id);
+        return this.findById(id);
     }
 
     @Override
     @Transactional
     public void delete(long id) {
-        this.getById(id);
+        this.findById(id);
         this.tagRepository.delete(id);
     }
 

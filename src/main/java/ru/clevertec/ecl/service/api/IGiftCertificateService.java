@@ -28,7 +28,7 @@ public interface IGiftCertificateService extends ICrudService<GiftCertificate> {
      * @return GiftCertificate entity
      */
     @Override
-    GiftCertificate getById(long id);
+    GiftCertificate findById(long id);
 
     /**
      * Method for getting all GiftCertificate entities
@@ -36,7 +36,7 @@ public interface IGiftCertificateService extends ICrudService<GiftCertificate> {
      * @return list of GiftCertificate entities
      */
     @Override
-    List<GiftCertificate> getAll();
+    List<GiftCertificate> findAll();
 
     /**
      * Method for updating GiftCertificate entity

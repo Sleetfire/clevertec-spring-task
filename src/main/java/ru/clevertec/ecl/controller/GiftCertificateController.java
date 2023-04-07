@@ -39,12 +39,12 @@ public class GiftCertificateController {
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<GiftCertificate> get(@PathVariable long id) {
-        return new ResponseEntity<>(this.giftCertificateService.getById(id), HttpStatus.OK);
+        return new ResponseEntity<>(this.giftCertificateService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<GiftCertificate>> getAll() {
-        return new ResponseEntity<>(this.giftCertificateService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(this.giftCertificateService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(value  = "/filter", produces = {MediaType.APPLICATION_JSON_VALUE})

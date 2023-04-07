@@ -36,12 +36,12 @@ public class TagController {
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Tag> get(@PathVariable long id) {
-        return new ResponseEntity<>(this.tagService.getById(id), HttpStatus.OK);
+        return new ResponseEntity<>(this.tagService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Tag>> getAll() {
-        return new ResponseEntity<>(this.tagService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(this.tagService.findAll(), HttpStatus.OK);
     }
 
     @PatchMapping(value = "/{id}",

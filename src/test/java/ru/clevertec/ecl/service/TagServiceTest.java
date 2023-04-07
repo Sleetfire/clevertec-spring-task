@@ -60,7 +60,7 @@ class TagServiceTest {
         Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
         doReturn(optionalTag).when(this.tagRepository).getById(tagId);
 
-        Tag tagFromDb = this.tagService.getById(tagId);
+        Tag tagFromDb = this.tagService.findById(tagId);
 
         assertThat(tagFromDb).isEqualTo(tag);
     }
@@ -70,7 +70,7 @@ class TagServiceTest {
     void checkGetShouldThrowEssenceNotFoundException() {
         doReturn(Optional.empty()).when(this.tagRepository).getById(anyLong());
 
-        assertThatThrownBy(() -> this.tagService.getById(anyLong()))
+        assertThatThrownBy(() -> this.tagService.findById(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
@@ -82,7 +82,7 @@ class TagServiceTest {
         Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
         doReturn(optionalTag).when(this.tagRepository).getByName(tagName);
 
-        Tag tagFromDb = this.tagService.getByName(tagName);
+        Tag tagFromDb = this.tagService.findByName(tagName);
 
         assertThat(tagFromDb).isEqualTo(tag);
     }
@@ -91,7 +91,7 @@ class TagServiceTest {
     @DisplayName("Getting tag dto by id should throw EssenceNotFoundException")
     void checkGetByNameShouldThrowEssenceNotFoundException() {
         doReturn(Optional.empty()).when(this.tagRepository).getByName(anyString());
-        assertThatThrownBy(() -> this.tagService.getByName(anyString()))
+        assertThatThrownBy(() -> this.tagService.findByName(anyString()))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
@@ -102,7 +102,7 @@ class TagServiceTest {
         List<TagEntity> tagEntities = TagMapper.INSTANCE.toEntity(tags);
         doReturn(tagEntities).when(this.tagRepository).getAll();
 
-        List<Tag> tagsFromDb = this.tagService.getAll();
+        List<Tag> tagsFromDb = this.tagService.findAll();
         assertThat(tagsFromDb).hasSameElementsAs(tags);
     }
 
@@ -111,7 +111,7 @@ class TagServiceTest {
     void checkGetAllShouldThrowEssenceNotFoundException() {
         doReturn(Collections.emptyList()).when(this.tagRepository).getAll();
 
-        assertThatThrownBy(() -> this.tagService.getAll())
+        assertThatThrownBy(() -> this.tagService.findAll())
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 

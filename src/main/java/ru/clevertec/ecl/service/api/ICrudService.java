@@ -24,14 +24,14 @@ public interface ICrudService<T> {
      * @param id entity's id
      * @return entity
      */
-    T getById(long id);
+    T findById(long id);
 
     /**
      * Method for getting all entities
      *
      * @return list of entities
      */
-    List<T> getAll();
+    List<T> findAll();
 
     /**
      * Method for updating entity

@@ -31,11 +31,11 @@ public class GiftCertificateService implements IGiftCertificateService {
         entity.setCreateDate(currentDate);
         entity.setLastUpdateDate(currentDate);
         long certificateID = this.giftCertificateRepository.create(GiftCertificateMapper.INSTANCE.toEntity(entity));
-        return this.getById(certificateID);
+        return this.findById(certificateID);
     }
 
     @Override
-    public GiftCertificate getById(long id) {
+    public GiftCertificate findById(long id) {
         Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
         if (optionalGiftCertificate.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
@@ -45,7 +45,7 @@ public class GiftCertificateService implements IGiftCertificateService {
     }
 
     @Override
-    public List<GiftCertificate> getAll() {
+    public List<GiftCertificate> findAll() {
         List<GiftCertificateEntity> giftCertificates = this.giftCertificateRepository.getAll();
         if (giftCertificates.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
@@ -67,14 +67,14 @@ public class GiftCertificateService implements IGiftCertificateService {
 
     @Override
     public GiftCertificate update(long id, GiftCertificate updatedEntity) {
-        this.getById(id);
+        this.findById(id);
         this.giftCertificateRepository.update(id, GiftCertificateMapper.INSTANCE.toEntity(updatedEntity));
-        return this.getById(id);
+        return this.findById(id);
     }
 
     @Override
     public void delete(long id) {
-        this.getById(id);
+        this.findById(id);
         this.giftCertificateRepository.delete(id);
     }
 

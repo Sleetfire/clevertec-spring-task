@@ -26,14 +26,14 @@ public interface ITagService extends ICrudService<Tag> {
      * @return Tag entity
      */
     @Override
-    Tag getById(long id);
+    Tag findById(long id);
 
     /**
      * Method for getting all Tag entities
      * @return list of Tag entities
      */
     @Override
-    List<Tag> getAll();
+    List<Tag> findAll();
 
     /**
      * Method for updating Tag entity
@@ -56,7 +56,7 @@ public interface ITagService extends ICrudService<Tag> {
      * @param name Tag name
      * @return Tag entity
      */
-    Tag getByName(String name);
+    Tag findByName(String name);
 
     /**
      * Method for delete all Tag entities

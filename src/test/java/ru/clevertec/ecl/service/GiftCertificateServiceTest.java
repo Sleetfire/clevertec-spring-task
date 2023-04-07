@@ -54,7 +54,7 @@ class GiftCertificateServiceTest {
                 .of(GiftCertificateMapper.INSTANCE.toEntity(giftCertificate));
         doReturn(optionalGiftCertificate).when(this.giftCertificateDecoratorRepository).getById(1L);
 
-        GiftCertificate giftCertificateFromDb = this.giftCertificateService.getById(1L);
+        GiftCertificate giftCertificateFromDb = this.giftCertificateService.findById(1L);
         assertThat(giftCertificateFromDb).isEqualTo(giftCertificate);
     }
 
@@ -63,7 +63,7 @@ class GiftCertificateServiceTest {
     void checkGetShouldByIdShouldThrowEssenceNofFoundException() {
         doReturn(Optional.empty()).when(this.giftCertificateDecoratorRepository).getById(anyLong());
 
-        assertThatThrownBy(() -> this.giftCertificateService.getById(anyLong()))
+        assertThatThrownBy(() -> this.giftCertificateService.findById(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
@@ -74,7 +74,7 @@ class GiftCertificateServiceTest {
         List<GiftCertificateEntity> giftCertificateEntities = GiftCertificateMapper.INSTANCE.toEntity(giftCertificates);
         doReturn(giftCertificateEntities).when(this.giftCertificateDecoratorRepository).getAll();
 
-        List<GiftCertificate> giftCertificatesFromDb = this.giftCertificateService.getAll();
+        List<GiftCertificate> giftCertificatesFromDb = this.giftCertificateService.findAll();
         assertThat(giftCertificatesFromDb).hasSameElementsAs(giftCertificates);
     }
 
@@ -83,7 +83,7 @@ class GiftCertificateServiceTest {
     void checkGetAllShouldThrowEssenceNotFoundException() {
         doReturn(Collections.emptyList()).when(this.giftCertificateDecoratorRepository).getAll();
 
-        assertThatThrownBy(() -> this.giftCertificateService.getAll())
+        assertThatThrownBy(() -> this.giftCertificateService.findAll())
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
