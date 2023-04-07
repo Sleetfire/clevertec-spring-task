@@ -29,7 +29,7 @@ public interface GiftCertificateRepository extends CrudRepository<GiftCertificat
      * @return GiftCertificateEntity in Optional wrapper
      */
     @Override
-    Optional<GiftCertificateEntity> getById(long id);
+    Optional<GiftCertificateEntity> findById(long id);
 
     /**
      * Method for getting all GiftCertificateEntities
@@ -37,7 +37,7 @@ public interface GiftCertificateRepository extends CrudRepository<GiftCertificat
      * @return list of GiftCertificateEntities
      */
     @Override
-    List<GiftCertificateEntity> getAll();
+    List<GiftCertificateEntity> findAll();
 
     /**
      * Method for updating entity

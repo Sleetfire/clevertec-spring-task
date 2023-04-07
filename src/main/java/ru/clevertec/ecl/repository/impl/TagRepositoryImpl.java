@@ -38,7 +38,7 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
-    public Optional<TagEntity> getById(long id) {
+    public Optional<TagEntity> findById(long id) {
         String sqlSelectQuery = "select * from ecl.tags where id = :id";
         MapSqlParameterSource paramMap = new MapSqlParameterSource();
         paramMap.addValue("id", id);
@@ -46,7 +46,7 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
-    public Optional<TagEntity> getByName(String name) {
+    public Optional<TagEntity> findByName(String name) {
         String sqlSelectQuery = "select * from ecl.tags where name = :name";
         MapSqlParameterSource paramMap = new MapSqlParameterSource();
         paramMap.addValue("name", name);
@@ -54,7 +54,7 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
-    public List<TagEntity> getAll() {
+    public List<TagEntity> findAll() {
         String sqlSelectQuery = "select * from ecl.tags";
         try {
             return this.namedParameterJdbcTemplate.query(sqlSelectQuery, new TagSQLMapper()).get(0);

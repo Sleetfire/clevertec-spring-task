@@ -27,7 +27,7 @@ public class TagServiceImpl implements ru.clevertec.ecl.service.TagService {
     @Transactional
     public Tag create(Tag tag) {
         String name = tag.getName();
-        Optional<TagEntity> optionalTag = this.tagRepository.getByName(name);
+        Optional<TagEntity> optionalTag = this.tagRepository.findByName(name);
         if (optionalTag.isPresent()) {
             throw new EssenceExistException(SingleResponseError.of("Tag with that name is already existing",
                     40001));
@@ -38,7 +38,7 @@ public class TagServiceImpl implements ru.clevertec.ecl.service.TagService {
 
     @Override
     public Tag findById(long id) {
-        Optional<TagEntity> optionalTag = this.tagRepository.getById(id);
+        Optional<TagEntity> optionalTag = this.tagRepository.findById(id);
         if (optionalTag.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
                     40401));
@@ -48,7 +48,7 @@ public class TagServiceImpl implements ru.clevertec.ecl.service.TagService {
 
     @Override
     public Tag findByName(String name) {
-        Optional<TagEntity> optionalTag = this.tagRepository.getByName(name);
+        Optional<TagEntity> optionalTag = this.tagRepository.findByName(name);
         if (optionalTag.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
                     40401));
@@ -58,7 +58,7 @@ public class TagServiceImpl implements ru.clevertec.ecl.service.TagService {
 
     @Override
     public List<Tag> findAll() {
-        List<TagEntity> tags = this.tagRepository.getAll();
+        List<TagEntity> tags = this.tagRepository.findAll();
         if (tags.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
                     40402));

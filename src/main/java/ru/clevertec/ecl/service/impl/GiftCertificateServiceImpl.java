@@ -35,7 +35,7 @@ public class GiftCertificateServiceImpl implements ru.clevertec.ecl.service.Gift
 
     @Override
     public GiftCertificate findById(long id) {
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.findById(id);
         if (optionalGiftCertificate.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
                     40401));
@@ -45,7 +45,7 @@ public class GiftCertificateServiceImpl implements ru.clevertec.ecl.service.Gift
 
     @Override
     public List<GiftCertificate> findAll() {
-        List<GiftCertificateEntity> giftCertificates = this.giftCertificateRepository.getAll();
+        List<GiftCertificateEntity> giftCertificates = this.giftCertificateRepository.findAll();
         if (giftCertificates.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
                     40402));

@@ -24,14 +24,14 @@ public interface TagRepository extends CrudRepository<TagEntity> {
      * @return TagEntity in Optional wrapper
      */
     @Override
-    Optional<TagEntity> getById(long id);
+    Optional<TagEntity> findById(long id);
 
     /**
      * Method for getting all TagEntities
      * @return list of TagEntities
      */
     @Override
-    List<TagEntity> getAll();
+    List<TagEntity> findAll();
 
     /**
      * Method for updating entity
@@ -54,7 +54,7 @@ public interface TagRepository extends CrudRepository<TagEntity> {
      * @param name TagEntity's name
      * @return TagEntity in Optional wrapper
      */
-    Optional<TagEntity> getByName(String name);
+    Optional<TagEntity> findByName(String name);
 
     /**
      * Method for deleting all TagEntities

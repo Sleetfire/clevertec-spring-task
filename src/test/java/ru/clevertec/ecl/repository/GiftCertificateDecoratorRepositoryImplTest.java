@@ -63,14 +63,14 @@ class GiftCertificateDecoratorRepositoryImplTest {
     void checkGetByIdShouldReturnOptional(GiftCertificateEntity giftCertificateEntity) {
         long id = this.giftCertificateRepository.create(giftCertificateEntity);
         giftCertificateEntity.setId(id);
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.findById(id);
         assertThat(optionalGiftCertificate).hasValue(giftCertificateEntity);
     }
 
     @Test
     @DisplayName("Getting by gift certificate entity should return empty Optional")
     void checkGetByIdShouldReturnEmptyOptional() {
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(1L);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.findById(1L);
         assertThat(optionalGiftCertificate).isEmpty();
     }
 
@@ -80,14 +80,14 @@ class GiftCertificateDecoratorRepositoryImplTest {
     void checkGetAllShouldReturnListGiftCertificateEntities(GiftCertificateEntity giftCertificateEntity) {
         long id = this.giftCertificateRepository.create(giftCertificateEntity);
         giftCertificateEntity.setId(id);
-        List<GiftCertificateEntity> giftCertificateEntities = this.giftCertificateRepository.getAll();
+        List<GiftCertificateEntity> giftCertificateEntities = this.giftCertificateRepository.findAll();
         assertThat(giftCertificateEntities).contains(giftCertificateEntity);
     }
 
     @Test
     @DisplayName("Getting gift certificate empty entity's list")
     void checkGetAllShouldReturnEmptyListGiftCertificateEntities() {
-        List<GiftCertificateEntity> giftCertificateEntities = this.giftCertificateRepository.getAll();
+        List<GiftCertificateEntity> giftCertificateEntities = this.giftCertificateRepository.findAll();
         assertThat(giftCertificateEntities).isEmpty();
     }
 
@@ -140,7 +140,7 @@ class GiftCertificateDecoratorRepositoryImplTest {
 
         this.giftCertificateRepository.update(id, updated);
 
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.findById(id);
         if (optionalGiftCertificate.isEmpty()) {
             return;
         }
@@ -155,7 +155,7 @@ class GiftCertificateDecoratorRepositoryImplTest {
     void checkDeleteById(GiftCertificateEntity giftCertificateEntity) {
         long id = this.giftCertificateRepository.create(giftCertificateEntity);
         this.giftCertificateRepository.delete(id);
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.findById(id);
         assertThat(optionalGiftCertificate).isEmpty();
     }
 
@@ -165,7 +165,7 @@ class GiftCertificateDecoratorRepositoryImplTest {
     void checkDeleteAll(GiftCertificateEntity giftCertificateEntity) {
         long id = this.giftCertificateRepository.create(giftCertificateEntity);
         this.giftCertificateRepository.delete();
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.findById(id);
         assertThat(optionalGiftCertificate).isEmpty();
     }
 

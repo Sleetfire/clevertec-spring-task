@@ -25,14 +25,14 @@ public interface CrudRepository<T> {
      * @param id entity's id
      * @return entity in Optional wrapper
      */
-    Optional<T> getById(long id);
+    Optional<T> findById(long id);
 
     /**
      * Method for getting all entities
      *
      * @return list of entities
      */
-    List<T> getAll();
+    List<T> findAll();
 
     /**
      * Method for updating entity

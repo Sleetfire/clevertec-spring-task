@@ -53,7 +53,7 @@ class GiftCertificateServiceImplTest {
     void checkGetByIdShouldReturnDto(GiftCertificate giftCertificate) {
         Optional<GiftCertificateEntity> optionalGiftCertificate = Optional
                 .of(GiftCertificateMapper.INSTANCE.toEntity(giftCertificate));
-        doReturn(optionalGiftCertificate).when(this.giftCertificateDecoratorRepositoryImpl).getById(1L);
+        doReturn(optionalGiftCertificate).when(this.giftCertificateDecoratorRepositoryImpl).findById(1L);
 
         GiftCertificate giftCertificateFromDb = this.giftCertificateServiceImpl.findById(1L);
         assertThat(giftCertificateFromDb).isEqualTo(giftCertificate);
@@ -62,7 +62,7 @@ class GiftCertificateServiceImplTest {
     @Test
     @DisplayName("Getting gift certificate dto by id should throw EssenceNotFoundException")
     void checkGetShouldByIdShouldThrowEssenceNofFoundException() {
-        doReturn(Optional.empty()).when(this.giftCertificateDecoratorRepositoryImpl).getById(anyLong());
+        doReturn(Optional.empty()).when(this.giftCertificateDecoratorRepositoryImpl).findById(anyLong());
 
         assertThatThrownBy(() -> this.giftCertificateServiceImpl.findById(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);
@@ -73,7 +73,7 @@ class GiftCertificateServiceImplTest {
     @DisplayName("Getting dto gift certificate's list")
     void checkGetAllShouldReturnDtoList(List<GiftCertificate> giftCertificates) {
         List<GiftCertificateEntity> giftCertificateEntities = GiftCertificateMapper.INSTANCE.toEntity(giftCertificates);
-        doReturn(giftCertificateEntities).when(this.giftCertificateDecoratorRepositoryImpl).getAll();
+        doReturn(giftCertificateEntities).when(this.giftCertificateDecoratorRepositoryImpl).findAll();
 
         List<GiftCertificate> giftCertificatesFromDb = this.giftCertificateServiceImpl.findAll();
         assertThat(giftCertificatesFromDb).hasSameElementsAs(giftCertificates);
@@ -82,7 +82,7 @@ class GiftCertificateServiceImplTest {
     @Test
     @DisplayName("Getting dto gift certificate's list should throw EssenceNotFoundException")
     void checkGetAllShouldThrowEssenceNotFoundException() {
-        doReturn(Collections.emptyList()).when(this.giftCertificateDecoratorRepositoryImpl).getAll();
+        doReturn(Collections.emptyList()).when(this.giftCertificateDecoratorRepositoryImpl).findAll();
 
         assertThatThrownBy(() -> this.giftCertificateServiceImpl.findAll())
                 .isInstanceOf(EssenceNotFoundException.class);
@@ -114,7 +114,7 @@ class GiftCertificateServiceImplTest {
     @Test
     @DisplayName("Deleting dto gift certificate should throw EssenceNotFoundException")
     void checkDeleteShouldReturnEssenceNotFoundException() {
-        doReturn(Optional.empty()).when(this.giftCertificateDecoratorRepositoryImpl).getById(anyLong());
+        doReturn(Optional.empty()).when(this.giftCertificateDecoratorRepositoryImpl).findById(anyLong());
 
         assertThatThrownBy(() -> this.giftCertificateServiceImpl.delete(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);

@@ -49,7 +49,7 @@ public class GiftCertificateRepositoryImpl implements GiftCertificateRepository 
     }
 
     @Override
-    public Optional<GiftCertificateEntity> getById(long id) {
+    public Optional<GiftCertificateEntity> findById(long id) {
         MapSqlParameterSource paramMap = new MapSqlParameterSource();
         paramMap.addValue("id", id);
         String sqlSelectQuery = "select * from find_certificates()" + "\nWHERE id IN (\n" +
@@ -64,7 +64,7 @@ public class GiftCertificateRepositoryImpl implements GiftCertificateRepository 
     }
 
     @Override
-    public List<GiftCertificateEntity> getAll() {
+    public List<GiftCertificateEntity> findAll() {
         String sqlSelectQuery = "select * from find_certificates()";
         try {
             return this.namedParameterJdbcTemplate.query(sqlSelectQuery, new GiftCertificateSQLMapper()).get(0);

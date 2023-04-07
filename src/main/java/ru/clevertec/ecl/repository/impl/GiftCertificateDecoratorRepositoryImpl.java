@@ -60,13 +60,13 @@ public class GiftCertificateDecoratorRepositoryImpl implements GiftCertificateRe
     }
 
     @Override
-    public Optional<GiftCertificateEntity> getById(long id) {
-        return this.giftCertificateRepository.getById(id);
+    public Optional<GiftCertificateEntity> findById(long id) {
+        return this.giftCertificateRepository.findById(id);
     }
 
     @Override
-    public List<GiftCertificateEntity> getAll() {
-        return this.giftCertificateRepository.getAll();
+    public List<GiftCertificateEntity> findAll() {
+        return this.giftCertificateRepository.findAll();
     }
 
     @Override
@@ -100,7 +100,7 @@ public class GiftCertificateDecoratorRepositoryImpl implements GiftCertificateRe
     private List<Long> getTagsIds(List<String> names) {
         List<Long> tagsIds = new ArrayList<>();
         names.forEach(name -> {
-            Optional<TagEntity> optionalTag = this.tagRepository.getByName(name);
+            Optional<TagEntity> optionalTag = this.tagRepository.findByName(name);
             if (optionalTag.isEmpty()) {
                 TagEntity tag = TagEntity.builder()
                         .name(name)
@@ -132,12 +132,12 @@ public class GiftCertificateDecoratorRepositoryImpl implements GiftCertificateRe
                     long tagId = tag.getId();
                     String tagName = tag.getName();
                     if (tagId != 0) {
-                        Optional<TagEntity> tagOptional = this.tagRepository.getById(tagId);
+                        Optional<TagEntity> tagOptional = this.tagRepository.findById(tagId);
                         if (tagOptional.isPresent()) {
                             this.tagRepository.update(tagId, tag);
                         }
                     } else if (tagName != null){
-                        Optional<TagEntity> tagOptional = this.tagRepository.getByName(tagName);
+                        Optional<TagEntity> tagOptional = this.tagRepository.findByName(tagName);
                         if (tagOptional.isEmpty()) {
                             this.tagRepository.create(tag);
                         }
