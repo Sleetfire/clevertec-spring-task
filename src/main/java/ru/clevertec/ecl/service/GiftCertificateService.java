@@ -1,85 +1,71 @@
 package ru.clevertec.ecl.service;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.GiftCertificate;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
-import ru.clevertec.ecl.dto.SingleResponseError;
-import ru.clevertec.ecl.exception.EssenceNotFoundException;
-import ru.clevertec.ecl.mapper.GiftCertificateMapper;
-import ru.clevertec.ecl.repository.api.IGiftCertificateRepository;
-import ru.clevertec.ecl.repository.entity.GiftCertificateEntity;
-import ru.clevertec.ecl.service.api.IGiftCertificateService;
-import ru.clevertec.ecl.util.DateUtil;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class GiftCertificateService implements IGiftCertificateService {
+/**
+ * Interface {@code IGiftCertificateService} defines methods for CRUD operations with GiftCertificates
+ *
+ * @version 0.1
+ */
+public interface GiftCertificateService extends CrudService<GiftCertificate> {
 
-    private final IGiftCertificateRepository giftCertificateRepository;
-
-    public GiftCertificateService(@Qualifier("giftCertificateDecoratorRepository")
-                                  IGiftCertificateRepository giftCertificateRepository) {
-        this.giftCertificateRepository = giftCertificateRepository;
-    }
-
+    /**
+     * Method for creating GiftCertificate entity
+     *
+     * @param entity entity to creating
+     * @return created GiftCertificate
+     */
     @Override
-    public GiftCertificate create(GiftCertificate entity) {
-        String currentDate = DateUtil.getCurrentDateISO8601();
-        entity.setCreateDate(currentDate);
-        entity.setLastUpdateDate(currentDate);
-        long certificateID = this.giftCertificateRepository.create(GiftCertificateMapper.INSTANCE.toEntity(entity));
-        return this.findById(certificateID);
-    }
+    GiftCertificate create(GiftCertificate entity);
 
+    /**
+     * Method for getting GiftCertificate entity by id
+     *
+     * @param id entity's id
+     * @return GiftCertificate entity
+     */
     @Override
-    public GiftCertificate findById(long id) {
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
-        if (optionalGiftCertificate.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40401));
-        }
-        return GiftCertificateMapper.INSTANCE.toDto(optionalGiftCertificate.get());
-    }
+    GiftCertificate findById(long id);
 
+    /**
+     * Method for getting all GiftCertificate entities
+     *
+     * @return list of GiftCertificate entities
+     */
     @Override
-    public List<GiftCertificate> findAll() {
-        List<GiftCertificateEntity> giftCertificates = this.giftCertificateRepository.getAll();
-        if (giftCertificates.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40402));
-        }
-        return GiftCertificateMapper.INSTANCE.toDto(giftCertificates);
-    }
+    List<GiftCertificate> findAll();
 
+    /**
+     * Method for updating GiftCertificate entity
+     *
+     * @param id            entity's id
+     * @param updatedEntity entity with updated fields
+     * @return updated GiftCertificate entity
+     */
     @Override
-    public List<GiftCertificate> getAll(GiftCertificateFilter filter) {
-        List<GiftCertificateEntity> giftCertificates = this.giftCertificateRepository.getAll(filter);
-        if (giftCertificates.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource with current " +
-                            "params was not found",
-                    40403));
-        }
-        return GiftCertificateMapper.INSTANCE.toDto(giftCertificates);
-    }
+    GiftCertificate update(long id, GiftCertificate updatedEntity);
 
+    /**
+     * Method for deleting GiftCertificate entity by id
+     *
+     * @param id entity's id
+     */
     @Override
-    public GiftCertificate update(long id, GiftCertificate updatedEntity) {
-        this.findById(id);
-        this.giftCertificateRepository.update(id, GiftCertificateMapper.INSTANCE.toEntity(updatedEntity));
-        return this.findById(id);
-    }
+    void delete(long id);
 
-    @Override
-    public void delete(long id) {
-        this.findById(id);
-        this.giftCertificateRepository.delete(id);
-    }
+    /**
+     * Method for getting GiftCertificate entities with filter
+     *
+     * @param filter filter with search fields
+     * @return list of GiftCertificate entities
+     */
+    List<GiftCertificate> getAll(GiftCertificateFilter filter);
 
-    @Override
-    public void delete() {
-        this.giftCertificateRepository.delete();
-    }
+    /**
+     * Method for delete all GiftCertificate entities
+     */
+    void delete();
 }

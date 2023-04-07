@@ -14,6 +14,7 @@ import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.TagMapper;
 import ru.clevertec.ecl.repository.TagRepository;
 import ru.clevertec.ecl.repository.entity.TagEntity;
+import ru.clevertec.ecl.service.impl.TagServiceImpl;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,13 +25,13 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TagServiceTest {
+class TagServiceImplTest {
 
     @Mock
     private TagRepository tagRepository;
 
     @InjectMocks
-    private TagService tagService;
+    private TagServiceImpl tagServiceImpl;
 
     @BeforeEach
     void setUp() {
@@ -48,7 +49,7 @@ class TagServiceTest {
         Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
         doReturn(optionalTag).when(this.tagRepository).getByName(tagName);
 
-        assertThatThrownBy(() -> this.tagService.create(tag))
+        assertThatThrownBy(() -> this.tagServiceImpl.create(tag))
                 .isInstanceOf(EssenceExistException.class);
     }
 
@@ -60,7 +61,7 @@ class TagServiceTest {
         Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
         doReturn(optionalTag).when(this.tagRepository).getById(tagId);
 
-        Tag tagFromDb = this.tagService.findById(tagId);
+        Tag tagFromDb = this.tagServiceImpl.findById(tagId);
 
         assertThat(tagFromDb).isEqualTo(tag);
     }
@@ -70,7 +71,7 @@ class TagServiceTest {
     void checkGetShouldThrowEssenceNotFoundException() {
         doReturn(Optional.empty()).when(this.tagRepository).getById(anyLong());
 
-        assertThatThrownBy(() -> this.tagService.findById(anyLong()))
+        assertThatThrownBy(() -> this.tagServiceImpl.findById(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
@@ -82,7 +83,7 @@ class TagServiceTest {
         Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
         doReturn(optionalTag).when(this.tagRepository).getByName(tagName);
 
-        Tag tagFromDb = this.tagService.findByName(tagName);
+        Tag tagFromDb = this.tagServiceImpl.findByName(tagName);
 
         assertThat(tagFromDb).isEqualTo(tag);
     }
@@ -91,7 +92,7 @@ class TagServiceTest {
     @DisplayName("Getting tag dto by id should throw EssenceNotFoundException")
     void checkGetByNameShouldThrowEssenceNotFoundException() {
         doReturn(Optional.empty()).when(this.tagRepository).getByName(anyString());
-        assertThatThrownBy(() -> this.tagService.findByName(anyString()))
+        assertThatThrownBy(() -> this.tagServiceImpl.findByName(anyString()))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
@@ -102,7 +103,7 @@ class TagServiceTest {
         List<TagEntity> tagEntities = TagMapper.INSTANCE.toEntity(tags);
         doReturn(tagEntities).when(this.tagRepository).getAll();
 
-        List<Tag> tagsFromDb = this.tagService.findAll();
+        List<Tag> tagsFromDb = this.tagServiceImpl.findAll();
         assertThat(tagsFromDb).hasSameElementsAs(tags);
     }
 
@@ -111,7 +112,7 @@ class TagServiceTest {
     void checkGetAllShouldThrowEssenceNotFoundException() {
         doReturn(Collections.emptyList()).when(this.tagRepository).getAll();
 
-        assertThatThrownBy(() -> this.tagService.findAll())
+        assertThatThrownBy(() -> this.tagServiceImpl.findAll())
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
@@ -120,7 +121,7 @@ class TagServiceTest {
     void checkDeleteShouldThrowEssenceNotFoundException() {
         doReturn(Optional.empty()).when(this.tagRepository).getById(anyLong());
 
-        assertThatThrownBy(() -> this.tagService.delete(anyLong()))
+        assertThatThrownBy(() -> this.tagServiceImpl.delete(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 

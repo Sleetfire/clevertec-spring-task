@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.clevertec.ecl.dto.Tag;
-import ru.clevertec.ecl.service.api.ITagService;
+import ru.clevertec.ecl.service.TagService;
 
 import java.util.List;
 
@@ -21,9 +21,9 @@ import java.util.List;
 @RequestMapping(value = "/tags")
 public class TagController {
 
-    private final ITagService tagService;
+    private final TagService tagService;
 
-    public TagController(ITagService tagService) {
+    public TagController(TagService tagService) {
         this.tagService = tagService;
     }
 

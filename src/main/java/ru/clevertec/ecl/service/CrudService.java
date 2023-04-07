@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.service.api;
+package ru.clevertec.ecl.service;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * @param <T> dto type
  * @version 0.1
  */
-public interface ICrudService<T> {
+public interface CrudService<T> {
 
     /**
      * Method for creating entity
