@@ -1,5 +1,6 @@
 package ru.clevertec.ecl.repository.util;
 
+import lombok.experimental.UtilityClass;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
@@ -17,13 +18,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@UtilityClass
 public class QueryUtil {
 
     private static final Logger logger = LogManager.getLogger(QueryUtil.class);
-
-    private QueryUtil() {
-        throw new IllegalStateException("Utility class");
-    }
 
     public static String getUpdateQuery(Map<String, Object> values, String tableName) {
         StringBuilder builder = new StringBuilder();

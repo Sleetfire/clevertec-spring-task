@@ -1,15 +1,13 @@
 package ru.clevertec.ecl.repository.util;
 
+import lombok.experimental.UtilityClass;
 import ru.clevertec.ecl.repository.entity.GiftCertificateEntity;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@UtilityClass
 public class EntityUtil {
-
-    private EntityUtil() {
-        throw new IllegalStateException("Utility class");
-    }
 
     public static Map<String, Object> getMap(GiftCertificateEntity giftCertificate) {
         Map<String, Object> values = new HashMap<>();
