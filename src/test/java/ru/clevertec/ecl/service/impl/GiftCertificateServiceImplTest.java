@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.service;
+package ru.clevertec.ecl.service.impl;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,32 +39,26 @@ class GiftCertificateServiceImplTest {
     @InjectMocks
     private GiftCertificateServiceImpl giftCertificateServiceImpl;
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("getGiftCertificate")
     @DisplayName("Getting gift certificate dto by id")
     void checkGetByIdShouldReturnDto(GiftCertificateDto giftCertificateDto) {
         Optional<GiftCertificateEntity> optionalGiftCertificate = Optional
                 .of(GiftCertificateMapper.INSTANCE.toEntity(giftCertificateDto));
-        doReturn(optionalGiftCertificate).when(this.giftCertificateDecoratorRepositoryImpl).findById(1L);
+        doReturn(optionalGiftCertificate)
+                .when(giftCertificateDecoratorRepositoryImpl).findById(1L);
 
-        GiftCertificateDto giftCertificateDtoFromDb = this.giftCertificateServiceImpl.findById(1L);
+        GiftCertificateDto giftCertificateDtoFromDb = giftCertificateServiceImpl.findById(1L);
         assertThat(giftCertificateDtoFromDb).isEqualTo(giftCertificateDto);
     }
 
     @Test
     @DisplayName("Getting gift certificate dto by id should throw EssenceNotFoundException")
     void checkGetShouldByIdShouldThrowEssenceNofFoundException() {
-        doReturn(Optional.empty()).when(this.giftCertificateDecoratorRepositoryImpl).findById(anyLong());
+        doReturn(Optional.empty())
+                .when(giftCertificateDecoratorRepositoryImpl).findById(anyLong());
 
-        assertThatThrownBy(() -> this.giftCertificateServiceImpl.findById(anyLong()))
+        assertThatThrownBy(() -> giftCertificateServiceImpl.findById(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
@@ -73,18 +67,20 @@ class GiftCertificateServiceImplTest {
     @DisplayName("Getting dto gift certificate's list")
     void checkGetAllShouldReturnDtoList(List<GiftCertificateDto> giftCertificateDtos) {
         List<GiftCertificateEntity> giftCertificateEntities = GiftCertificateMapper.INSTANCE.toEntity(giftCertificateDtos);
-        doReturn(giftCertificateEntities).when(this.giftCertificateDecoratorRepositoryImpl).findAll();
+        doReturn(giftCertificateEntities)
+                .when(giftCertificateDecoratorRepositoryImpl).findAll();
 
-        List<GiftCertificateDto> giftCertificatesFromDbDto = this.giftCertificateServiceImpl.findAll();
+        List<GiftCertificateDto> giftCertificatesFromDbDto = giftCertificateServiceImpl.findAll();
         assertThat(giftCertificatesFromDbDto).hasSameElementsAs(giftCertificateDtos);
     }
 
     @Test
     @DisplayName("Getting dto gift certificate's list should throw EssenceNotFoundException")
     void checkGetAllShouldThrowEssenceNotFoundException() {
-        doReturn(Collections.emptyList()).when(this.giftCertificateDecoratorRepositoryImpl).findAll();
+        doReturn(Collections.emptyList())
+                .when(giftCertificateDecoratorRepositoryImpl).findAll();
 
-        assertThatThrownBy(() -> this.giftCertificateServiceImpl.findAll())
+        assertThatThrownBy(() -> giftCertificateServiceImpl.findAll())
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
@@ -94,9 +90,10 @@ class GiftCertificateServiceImplTest {
     void checkGetAllWithFilter(List<GiftCertificateDto> giftCertificateDtos) {
         GiftCertificateFilter filter = new GiftCertificateFilter();
         List<GiftCertificateEntity> giftCertificateEntities = GiftCertificateMapper.INSTANCE.toEntity(giftCertificateDtos);
-        doReturn(giftCertificateEntities).when(this.giftCertificateDecoratorRepositoryImpl).getAll(filter);
+        doReturn(giftCertificateEntities)
+                .when(giftCertificateDecoratorRepositoryImpl).getAll(filter);
 
-        List<GiftCertificateDto> giftCertificatesFromDbDto = this.giftCertificateServiceImpl.getAll(filter);
+        List<GiftCertificateDto> giftCertificatesFromDbDto = giftCertificateServiceImpl.getAll(filter);
 
         assertThat(giftCertificatesFromDbDto).hasSameElementsAs(giftCertificateDtos);
     }
@@ -105,20 +102,35 @@ class GiftCertificateServiceImplTest {
     @DisplayName("Getting dto gift certificate's list with filter should throw EssenceNotFoundException")
     void checkGetAllWithFilterShouldThrowEssenceNotFoundException() {
         GiftCertificateFilter filter = new GiftCertificateFilter();
-        doReturn(Collections.emptyList()).when(this.giftCertificateDecoratorRepositoryImpl).getAll(filter);
+        doReturn(Collections.emptyList())
+                .when(giftCertificateDecoratorRepositoryImpl).getAll(filter);
 
-        assertThatThrownBy(() -> this.giftCertificateServiceImpl.getAll(filter))
+        assertThatThrownBy(() -> giftCertificateServiceImpl.getAll(filter))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
     @Test
     @DisplayName("Deleting dto gift certificate should throw EssenceNotFoundException")
     void checkDeleteShouldReturnEssenceNotFoundException() {
-        doReturn(Optional.empty()).when(this.giftCertificateDecoratorRepositoryImpl).findById(anyLong());
+        doReturn(Optional.empty())
+                .when(giftCertificateDecoratorRepositoryImpl).findById(anyLong());
 
-        assertThatThrownBy(() -> this.giftCertificateServiceImpl.delete(anyLong()))
+        assertThatThrownBy(() -> giftCertificateServiceImpl.delete(anyLong()))
                 .isInstanceOf(EssenceNotFoundException.class);
     }
+
+    @Test
+    @DisplayName("Deleting all gift certificates should call delete method from repository")
+    void checkDeleteShouldCallMethodFromRepository() {
+        doNothing()
+                .when(giftCertificateDecoratorRepositoryImpl).delete();
+
+        giftCertificateServiceImpl.delete();
+
+        verify(giftCertificateDecoratorRepositoryImpl).delete();
+
+    }
+
 
     static Stream<GiftCertificateDto> getGiftCertificate() {
         TagDto tagDto1 = TagDto.builder().id(1L).name("first_tag").build();
@@ -139,7 +151,7 @@ class GiftCertificateServiceImplTest {
     }
 
     static Stream<List<GiftCertificateDto>> getGiftCertificates() {
-        List<GiftCertificateDto> giftCertificateDtos = getGiftCertificate().toList();
-        return Stream.of(giftCertificateDtos);
+        List<GiftCertificateDto> giftCertificates = getGiftCertificate().toList();
+        return Stream.of(giftCertificates);
     }
 }

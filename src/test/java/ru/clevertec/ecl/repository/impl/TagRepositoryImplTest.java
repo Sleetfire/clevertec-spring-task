@@ -1,7 +1,6 @@
-package ru.clevertec.ecl.repository;
+package ru.clevertec.ecl.repository.impl;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import ru.clevertec.ecl.config.SpringTestJdbcConfig;
+import config.SpringTestJdbcConfig;
+import ru.clevertec.ecl.repository.TagRepository;
 import ru.clevertec.ecl.repository.entity.TagEntity;
 
 import java.util.List;
@@ -32,20 +32,16 @@ class TagRepositoryImplTest {
     @Autowired
     private TagRepository tagRepository;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @AfterEach
     void tearDown() {
-        this.tagRepository.delete();
+        tagRepository.delete();
     }
 
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("getTagEntity")
     @DisplayName("Creating tag entity")
     void checkCreateShouldReturnId(TagEntity tagEntity) {
-        long id = this.tagRepository.create(tagEntity);
+        long id = tagRepository.create(tagEntity);
         assertThat(id).isNotZero();
     }
 
@@ -53,8 +49,8 @@ class TagRepositoryImplTest {
     @MethodSource("getTagEntity")
     @DisplayName("Getting tag entity by id")
     void checkGetByIdShouldReturnOptional(TagEntity tagEntity) {
-        long id = this.tagRepository.create(tagEntity);
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.findById(id);
+        long id = tagRepository.create(tagEntity);
+        Optional<TagEntity> optionalTagEntity = tagRepository.findById(id);
         tagEntity.setId(id);
         assertThat(optionalTagEntity).hasValue(tagEntity);
     }
@@ -62,7 +58,7 @@ class TagRepositoryImplTest {
     @Test
     @DisplayName("Getting tag entity by id should return empty Optional")
     void checkGetByIdShouldReturnEmptyOptional() {
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.findById(1L);
+        Optional<TagEntity> optionalTagEntity = tagRepository.findById(1L);
         assertThat(optionalTagEntity).isEmpty();
     }
 
@@ -70,9 +66,9 @@ class TagRepositoryImplTest {
     @MethodSource("getTagEntity")
     @DisplayName("Getting tag entity by name")
     void checkGetByNameShouldReturnOptional(TagEntity tagEntity) {
-        long id = this.tagRepository.create(tagEntity);
+        long id = tagRepository.create(tagEntity);
         String name = tagEntity.getName();
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.findByName(name);
+        Optional<TagEntity> optionalTagEntity = tagRepository.findByName(name);
         tagEntity.setId(id);
         assertThat(optionalTagEntity).hasValue(tagEntity);
     }
@@ -80,7 +76,7 @@ class TagRepositoryImplTest {
     @Test
     @DisplayName("Getting tag entity by name should return empty Optional")
     void checkGetByNameShouldReturnEmptyOptional() {
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.findByName("name");
+        Optional<TagEntity> optionalTagEntity = tagRepository.findByName("name");
         assertThat(optionalTagEntity).isEmpty();
     }
 
@@ -88,16 +84,16 @@ class TagRepositoryImplTest {
     @MethodSource("getTagEntity")
     @DisplayName("Getting tag entity's list")
     void checkGetAllShouldReturnTagsList(TagEntity tagEntity) {
-        long id = this.tagRepository.create(tagEntity);
+        long id = tagRepository.create(tagEntity);
         tagEntity.setId(id);
-        List<TagEntity> tagEntities = this.tagRepository.findAll();
+        List<TagEntity> tagEntities = tagRepository.findAll();
         assertThat(tagEntities).contains(tagEntity);
     }
 
     @Test
     @DisplayName("Getting empty tag entity's list")
     void checkGetAllShouldReturnEmptyList() {
-        List<TagEntity> tagEntities = this.tagRepository.findAll();
+        List<TagEntity> tagEntities = tagRepository.findAll();
         assertThat(tagEntities).isEmpty();
     }
 
@@ -105,12 +101,12 @@ class TagRepositoryImplTest {
     @MethodSource("getTagEntity")
     @DisplayName("Updating tag entity")
     void checkUpdateShouldReturnUpdatedTagEntity(TagEntity tagEntity) {
-        long id = this.tagRepository.create(tagEntity);
+        long id = tagRepository.create(tagEntity);
         tagEntity.setId(id);
         TagEntity updated = TagEntity.builder().name("last_tag").build();
-        long updatedTagId = this.tagRepository.update(id, updated);
+        long updatedTagId = tagRepository.update(id, updated);
         updated.setId(updatedTagId);
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.findById(updatedTagId);
+        Optional<TagEntity> optionalTagEntity = tagRepository.findById(updatedTagId);
         assertThat(optionalTagEntity).hasValue(updated);
     }
 
@@ -118,9 +114,9 @@ class TagRepositoryImplTest {
     @MethodSource("getTagEntity")
     @DisplayName("Deleting tag entity by id")
     void checkDelete(TagEntity tagEntity) {
-        long id = this.tagRepository.create(tagEntity);
-        this.tagRepository.delete(id);
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.findById(id);
+        long id = tagRepository.create(tagEntity);
+        tagRepository.delete(id);
+        Optional<TagEntity> optionalTagEntity = tagRepository.findById(id);
         assertThat(optionalTagEntity).isEmpty();
     }
 
@@ -128,9 +124,9 @@ class TagRepositoryImplTest {
     @MethodSource("getTagEntity")
     @DisplayName("Deleting all tag entities")
     void checkDeleteAll(TagEntity tagEntity) {
-        long id = this.tagRepository.create(tagEntity);
-        this.tagRepository.delete();
-        Optional<TagEntity> optionalTagEntity = this.tagRepository.findById(id);
+        long id = tagRepository.create(tagEntity);
+        tagRepository.delete();
+        Optional<TagEntity> optionalTagEntity = tagRepository.findById(id);
         assertThat(optionalTagEntity).isEmpty();
     }
 

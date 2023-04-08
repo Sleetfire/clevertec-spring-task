@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.service;
+package ru.clevertec.ecl.service.impl;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -126,6 +126,7 @@ class TagServiceImplTest {
     }
 
     @Test
+    @DisplayName("Deleting all tags should call delete method from repository")
     void checkDeleteShouldCallDeleteMethodFromRepository() {
         doNothing()
                 .when(tagRepositoryImpl).delete();

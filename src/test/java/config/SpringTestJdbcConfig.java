@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.config;
+package config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
