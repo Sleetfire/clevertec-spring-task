@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.repository.api;
+package ru.clevertec.ecl.repository;
 
 import ru.clevertec.ecl.repository.entity.TagEntity;
 

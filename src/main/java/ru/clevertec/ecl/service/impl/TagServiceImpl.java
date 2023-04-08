@@ -7,7 +7,7 @@ import ru.clevertec.ecl.dto.Tag;
 import ru.clevertec.ecl.exception.EssenceExistException;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.TagMapper;
-import ru.clevertec.ecl.repository.api.TagRepository;
+import ru.clevertec.ecl.repository.TagRepository;
 import ru.clevertec.ecl.repository.entity.TagEntity;
 
 import java.util.List;

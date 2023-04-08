@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
-import ru.clevertec.ecl.repository.api.GiftCertificateRepository;
+import ru.clevertec.ecl.repository.GiftCertificateRepository;
 import ru.clevertec.ecl.repository.mappers.GiftCertificateSQLMapper;
 import ru.clevertec.ecl.repository.util.EntityUtil;
 import ru.clevertec.ecl.repository.util.QueryUtil;

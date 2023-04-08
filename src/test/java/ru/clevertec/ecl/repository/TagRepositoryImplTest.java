@@ -14,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.config.SpringTestJdbcConfig;
-import ru.clevertec.ecl.repository.api.TagRepository;
 import ru.clevertec.ecl.repository.entity.TagEntity;
 
 import java.util.List;

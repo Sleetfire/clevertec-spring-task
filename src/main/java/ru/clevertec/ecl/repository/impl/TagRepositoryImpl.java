@@ -7,7 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.clevertec.ecl.repository.api.TagRepository;
+import ru.clevertec.ecl.repository.TagRepository;
 import ru.clevertec.ecl.repository.mappers.TagSQLMapper;
 import ru.clevertec.ecl.repository.util.QueryUtil;
 import ru.clevertec.ecl.repository.entity.TagEntity;
