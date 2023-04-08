@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class GiftCertificateFilter {
+
     private String tagName;
     private String fieldPart;
     private String sortName;

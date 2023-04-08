@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SingleResponseError {
+
     private String errorMessage;
     private int errorCode;
 

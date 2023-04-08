@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class GiftCertificateEntity {
+
     private long id;
     private String name;
     private String description;
