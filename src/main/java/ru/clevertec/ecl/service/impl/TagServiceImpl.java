@@ -18,72 +18,72 @@ import java.util.Optional;
 public class TagServiceImpl implements ru.clevertec.ecl.service.TagService {
 
     private final TagRepository tagRepository;
+    private final TagMapper tagMapper;
+    private static final String EXISTING_ERROR = "Tag with that name is already existing";
+    private static final String NOT_FOUND_ERROR = "Requested resource was not found";
 
-    public TagServiceImpl(TagRepository tagRepository) {
+    public TagServiceImpl(TagRepository tagRepository, TagMapper tagMapper) {
         this.tagRepository = tagRepository;
+        this.tagMapper = tagMapper;
     }
 
     @Override
     @Transactional
     public Tag create(Tag tag) {
         String name = tag.getName();
-        Optional<TagEntity> optionalTag = this.tagRepository.findByName(name);
+        Optional<TagEntity> optionalTag = tagRepository.findByName(name);
         if (optionalTag.isPresent()) {
-            throw new EssenceExistException(SingleResponseError.of("Tag with that name is already existing",
-                    40001));
+            throw new EssenceExistException(SingleResponseError.of(EXISTING_ERROR, 40001));
         }
-        long tagId = this.tagRepository.create(TagMapper.INSTANCE.toEntity(tag));
-        return this.findById(tagId);
+        long tagId = tagRepository.create(tagMapper.toEntity(tag));
+        return findById(tagId);
     }
 
     @Override
     public Tag findById(long id) {
         Optional<TagEntity> optionalTag = this.tagRepository.findById(id);
         if (optionalTag.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40401));
+            throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
         }
-        return TagMapper.INSTANCE.toDto(optionalTag.get());
+        return tagMapper.toDto(optionalTag.get());
     }
 
     @Override
     public Tag findByName(String name) {
-        Optional<TagEntity> optionalTag = this.tagRepository.findByName(name);
+        Optional<TagEntity> optionalTag = tagRepository.findByName(name);
         if (optionalTag.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40401));
+            throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
         }
-        return TagMapper.INSTANCE.toDto(optionalTag.get());
+        return tagMapper.toDto(optionalTag.get());
     }
 
     @Override
     public List<Tag> findAll() {
         List<TagEntity> tags = this.tagRepository.findAll();
         if (tags.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40402));
+            throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40402));
         }
-        return TagMapper.INSTANCE.toDto(tags);
+        return tagMapper.toDto(tags);
     }
 
     @Override
     @Transactional
     public Tag update(long id, Tag updated) {
-        this.findById(id);
-        this.tagRepository.update(id, TagMapper.INSTANCE.toEntity(updated));
-        return this.findById(id);
+        findById(id);
+        tagRepository.update(id, tagMapper.toEntity(updated));
+        return findById(id);
     }
 
     @Override
     @Transactional
     public void delete(long id) {
-        this.findById(id);
-        this.tagRepository.delete(id);
+        findById(id);
+        tagRepository.delete(id);
     }
 
     @Override
     @Transactional
     public void delete() {
-        this.delete();
+        tagRepository.delete();
     }
 }
