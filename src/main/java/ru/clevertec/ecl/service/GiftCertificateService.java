@@ -1,6 +1,6 @@
 package ru.clevertec.ecl.service;
 
-import ru.clevertec.ecl.dto.GiftCertificate;
+import ru.clevertec.ecl.dto.GiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @version 0.1
  */
-public interface GiftCertificateService extends CrudService<GiftCertificate> {
+public interface GiftCertificateService extends CrudService<GiftCertificateDto> {
 
     /**
      * Method for creating GiftCertificate entity
@@ -19,7 +19,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificate> {
      * @return created GiftCertificate
      */
     @Override
-    GiftCertificate create(GiftCertificate entity);
+    GiftCertificateDto create(GiftCertificateDto entity);
 
     /**
      * Method for getting GiftCertificate entity by id
@@ -28,7 +28,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificate> {
      * @return GiftCertificate entity
      */
     @Override
-    GiftCertificate findById(long id);
+    GiftCertificateDto findById(long id);
 
     /**
      * Method for getting all GiftCertificate entities
@@ -36,7 +36,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificate> {
      * @return list of GiftCertificate entities
      */
     @Override
-    List<GiftCertificate> findAll();
+    List<GiftCertificateDto> findAll();
 
     /**
      * Method for updating GiftCertificate entity
@@ -46,7 +46,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificate> {
      * @return updated GiftCertificate entity
      */
     @Override
-    GiftCertificate update(long id, GiftCertificate updatedEntity);
+    GiftCertificateDto update(long id, GiftCertificateDto updatedEntity);
 
     /**
      * Method for deleting GiftCertificate entity by id
@@ -62,7 +62,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificate> {
      * @param filter filter with search fields
      * @return list of GiftCertificate entities
      */
-    List<GiftCertificate> getAll(GiftCertificateFilter filter);
+    List<GiftCertificateDto> getAll(GiftCertificateFilter filter);
 
     /**
      * Method for delete all GiftCertificate entities

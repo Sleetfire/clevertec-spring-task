@@ -2,7 +2,7 @@ package ru.clevertec.ecl.service.impl;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ru.clevertec.ecl.dto.GiftCertificate;
+import ru.clevertec.ecl.dto.GiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
 import ru.clevertec.ecl.dto.SingleResponseError;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
@@ -30,7 +30,7 @@ public class GiftCertificateServiceImpl implements ru.clevertec.ecl.service.Gift
     }
 
     @Override
-    public GiftCertificate create(GiftCertificate entity) {
+    public GiftCertificateDto create(GiftCertificateDto entity) {
         String currentDate = DateUtil.getCurrentDateISO8601();
         entity.setCreateDate(currentDate);
         entity.setLastUpdateDate(currentDate);
@@ -39,7 +39,7 @@ public class GiftCertificateServiceImpl implements ru.clevertec.ecl.service.Gift
     }
 
     @Override
-    public GiftCertificate findById(long id) {
+    public GiftCertificateDto findById(long id) {
         Optional<GiftCertificateEntity> optionalGiftCertificate = giftCertificateRepository.findById(id);
         if (optionalGiftCertificate.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
@@ -48,7 +48,7 @@ public class GiftCertificateServiceImpl implements ru.clevertec.ecl.service.Gift
     }
 
     @Override
-    public List<GiftCertificate> findAll() {
+    public List<GiftCertificateDto> findAll() {
         List<GiftCertificateEntity> giftCertificates = giftCertificateRepository.findAll();
         if (giftCertificates.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40402));
@@ -57,7 +57,7 @@ public class GiftCertificateServiceImpl implements ru.clevertec.ecl.service.Gift
     }
 
     @Override
-    public List<GiftCertificate> getAll(GiftCertificateFilter filter) {
+    public List<GiftCertificateDto> getAll(GiftCertificateFilter filter) {
         List<GiftCertificateEntity> giftCertificates = giftCertificateRepository.getAll(filter);
         if (giftCertificates.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_PARAMS_ERROR, 40403));
@@ -66,7 +66,7 @@ public class GiftCertificateServiceImpl implements ru.clevertec.ecl.service.Gift
     }
 
     @Override
-    public GiftCertificate update(long id, GiftCertificate updatedEntity) {
+    public GiftCertificateDto update(long id, GiftCertificateDto updatedEntity) {
         findById(id);
         giftCertificateRepository.update(id, giftCertificateMapper.toEntity(updatedEntity));
         return findById(id);

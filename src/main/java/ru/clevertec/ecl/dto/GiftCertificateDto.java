@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GiftCertificate {
+public class GiftCertificateDto {
 
     private long id;
     private String name;
@@ -29,6 +29,6 @@ public class GiftCertificate {
     private Duration duration;
     private String createDate;
     private String lastUpdateDate;
-    private List<Tag> tags;
+    private List<TagDto> tags;
 
 }

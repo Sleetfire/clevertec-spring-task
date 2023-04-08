@@ -1,6 +1,6 @@
 package ru.clevertec.ecl.service;
 
-import ru.clevertec.ecl.dto.Tag;
+import ru.clevertec.ecl.dto.TagDto;
 
 import java.util.List;
 
@@ -9,16 +9,16 @@ import java.util.List;
  *
  * @version 0.1
  */
-public interface TagService extends CrudService<Tag> {
+public interface TagService extends CrudService<TagDto> {
 
     /**
      * Method for creating Tag entity
      *
-     * @param tag entity to creating
+     * @param tagDto entity to creating
      * @return creating Tag entity
      */
     @Override
-    Tag create(Tag tag);
+    TagDto create(TagDto tagDto);
 
     /**
      * Method for getting Tag entity by id
@@ -26,14 +26,14 @@ public interface TagService extends CrudService<Tag> {
      * @return Tag entity
      */
     @Override
-    Tag findById(long id);
+    TagDto findById(long id);
 
     /**
      * Method for getting all Tag entities
      * @return list of Tag entities
      */
     @Override
-    List<Tag> findAll();
+    List<TagDto> findAll();
 
     /**
      * Method for updating Tag entity
@@ -42,7 +42,7 @@ public interface TagService extends CrudService<Tag> {
      * @return updated Tag entity
      */
     @Override
-    Tag update(long id, Tag updated);
+    TagDto update(long id, TagDto updated);
 
     /**
      * Method for deleting Tag entity by id
@@ -56,7 +56,7 @@ public interface TagService extends CrudService<Tag> {
      * @param name Tag name
      * @return Tag entity
      */
-    Tag findByName(String name);
+    TagDto findByName(String name);
 
     /**
      * Method for delete all Tag entities

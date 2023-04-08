@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tag {
+public class TagDto {
 
     private long id;
     private String name;

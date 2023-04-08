@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.clevertec.ecl.dto.Tag;
+import ru.clevertec.ecl.dto.TagDto;
 import ru.clevertec.ecl.service.TagService;
 
 import java.util.List;
@@ -30,25 +30,25 @@ public class TagController {
     @PostMapping(value = "/",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Tag> create(@RequestBody Tag tag) {
-        return new ResponseEntity<>(this.tagService.create(tag), HttpStatus.CREATED);
+    public ResponseEntity<TagDto> create(@RequestBody TagDto tagDto) {
+        return new ResponseEntity<>(this.tagService.create(tagDto), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Tag> get(@PathVariable long id) {
+    public ResponseEntity<TagDto> get(@PathVariable long id) {
         return new ResponseEntity<>(this.tagService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<Tag>> getAll() {
+    public ResponseEntity<List<TagDto>> getAll() {
         return new ResponseEntity<>(this.tagService.findAll(), HttpStatus.OK);
     }
 
     @PatchMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Tag> update(@PathVariable long id, @RequestBody Tag tag) {
-        return new ResponseEntity<>(this.tagService.update(id, tag), HttpStatus.OK);
+    public ResponseEntity<TagDto> update(@PathVariable long id, @RequestBody TagDto tagDto) {
+        return new ResponseEntity<>(this.tagService.update(id, tagDto), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")

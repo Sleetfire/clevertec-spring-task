@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.clevertec.ecl.dto.GiftCertificate;
+import ru.clevertec.ecl.dto.GiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
 import ru.clevertec.ecl.service.GiftCertificateService;
 
@@ -33,22 +33,22 @@ public class GiftCertificateController {
     @PostMapping(value = "/",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<GiftCertificate> create(@RequestBody GiftCertificate giftCertificate) {
-        return new ResponseEntity<>(this.giftCertificateService.create(giftCertificate), HttpStatus.CREATED);
+    public ResponseEntity<GiftCertificateDto> create(@RequestBody GiftCertificateDto giftCertificateDto) {
+        return new ResponseEntity<>(this.giftCertificateService.create(giftCertificateDto), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<GiftCertificate> get(@PathVariable long id) {
+    public ResponseEntity<GiftCertificateDto> get(@PathVariable long id) {
         return new ResponseEntity<>(this.giftCertificateService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<GiftCertificate>> getAll() {
+    public ResponseEntity<List<GiftCertificateDto>> getAll() {
         return new ResponseEntity<>(this.giftCertificateService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(value  = "/filter", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<List<GiftCertificate>> getAllFiltered(@RequestParam MultiValueMap<String, String> multiValueMap) {
+    public ResponseEntity<List<GiftCertificateDto>> getAllFiltered(@RequestParam MultiValueMap<String, String> multiValueMap) {
         GiftCertificateFilter filter = GiftCertificateFilter.builder()
                 .tagName(multiValueMap.get("tag_name").get(0))
                 .fieldPart(multiValueMap.get("search_word").get(0))
@@ -61,7 +61,7 @@ public class GiftCertificateController {
     @PatchMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<GiftCertificate> update(@PathVariable long id, @RequestBody GiftCertificate certificate) {
+    public ResponseEntity<GiftCertificateDto> update(@PathVariable long id, @RequestBody GiftCertificateDto certificate) {
         return new ResponseEntity<>(this.giftCertificateService.update(id, certificate), HttpStatus.OK);
     }
 

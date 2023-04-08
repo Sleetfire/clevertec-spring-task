@@ -3,7 +3,7 @@ package ru.clevertec.ecl.service.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.SingleResponseError;
-import ru.clevertec.ecl.dto.Tag;
+import ru.clevertec.ecl.dto.TagDto;
 import ru.clevertec.ecl.exception.EssenceExistException;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.TagMapper;
@@ -29,18 +29,18 @@ public class TagServiceImpl implements ru.clevertec.ecl.service.TagService {
 
     @Override
     @Transactional
-    public Tag create(Tag tag) {
-        String name = tag.getName();
+    public TagDto create(TagDto tagDto) {
+        String name = tagDto.getName();
         Optional<TagEntity> optionalTag = tagRepository.findByName(name);
         if (optionalTag.isPresent()) {
             throw new EssenceExistException(SingleResponseError.of(EXISTING_ERROR, 40001));
         }
-        long tagId = tagRepository.create(tagMapper.toEntity(tag));
+        long tagId = tagRepository.create(tagMapper.toEntity(tagDto));
         return findById(tagId);
     }
 
     @Override
-    public Tag findById(long id) {
+    public TagDto findById(long id) {
         Optional<TagEntity> optionalTag = this.tagRepository.findById(id);
         if (optionalTag.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
@@ -49,7 +49,7 @@ public class TagServiceImpl implements ru.clevertec.ecl.service.TagService {
     }
 
     @Override
-    public Tag findByName(String name) {
+    public TagDto findByName(String name) {
         Optional<TagEntity> optionalTag = tagRepository.findByName(name);
         if (optionalTag.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
@@ -58,7 +58,7 @@ public class TagServiceImpl implements ru.clevertec.ecl.service.TagService {
     }
 
     @Override
-    public List<Tag> findAll() {
+    public List<TagDto> findAll() {
         List<TagEntity> tags = this.tagRepository.findAll();
         if (tags.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40402));
@@ -68,7 +68,7 @@ public class TagServiceImpl implements ru.clevertec.ecl.service.TagService {
 
     @Override
     @Transactional
-    public Tag update(long id, Tag updated) {
+    public TagDto update(long id, TagDto updated) {
         findById(id);
         tagRepository.update(id, tagMapper.toEntity(updated));
         return findById(id);

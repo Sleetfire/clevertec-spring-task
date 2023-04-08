@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import ru.clevertec.ecl.dto.Tag;
+import ru.clevertec.ecl.dto.TagDto;
 import ru.clevertec.ecl.exception.EssenceExistException;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.TagMapper;
@@ -36,28 +36,28 @@ class TagServiceImplTest {
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("getTag")
     @DisplayName("Creating tag should throw EssenceExistException")
-    void checkCreateShouldThrowEssenceExistException(Tag tag) {
-        String tagName = tag.getName();
-        Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
+    void checkCreateShouldThrowEssenceExistException(TagDto tagDto) {
+        String tagName = tagDto.getName();
+        Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tagDto));
         doReturn(optionalTag)
                 .when(this.tagRepositoryImpl).findByName(tagName);
 
-        assertThatThrownBy(() -> this.tagServiceImpl.create(tag))
+        assertThatThrownBy(() -> this.tagServiceImpl.create(tagDto))
                 .isInstanceOf(EssenceExistException.class);
     }
 
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("getTag")
     @DisplayName("Getting tag dto by id")
-    void checkGetShouldReturnDto(Tag tag) {
-        long tagId = tag.getId();
-        Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
+    void checkGetShouldReturnDto(TagDto tagDto) {
+        long tagId = tagDto.getId();
+        Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tagDto));
         doReturn(optionalTag)
                 .when(this.tagRepositoryImpl).findById(tagId);
 
-        Tag tagFromDb = this.tagServiceImpl.findById(tagId);
+        TagDto tagDtoFromDb = this.tagServiceImpl.findById(tagId);
 
-        assertThat(tagFromDb).isEqualTo(tag);
+        assertThat(tagDtoFromDb).isEqualTo(tagDto);
     }
 
     @Test
@@ -73,15 +73,15 @@ class TagServiceImplTest {
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("getTag")
     @DisplayName("Getting tag dto by tag's name")
-    void checkGetByNameShouldReturnDto(Tag tag) {
-        String tagName = tag.getName();
-        Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tag));
+    void checkGetByNameShouldReturnDto(TagDto tagDto) {
+        String tagName = tagDto.getName();
+        Optional<TagEntity> optionalTag = Optional.of(TagMapper.INSTANCE.toEntity(tagDto));
         doReturn(optionalTag)
                 .when(this.tagRepositoryImpl).findByName(tagName);
 
-        Tag tagFromDb = this.tagServiceImpl.findByName(tagName);
+        TagDto tagDtoFromDb = this.tagServiceImpl.findByName(tagName);
 
-        assertThat(tagFromDb).isEqualTo(tag);
+        assertThat(tagDtoFromDb).isEqualTo(tagDto);
     }
 
     @Test
@@ -96,13 +96,13 @@ class TagServiceImplTest {
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("getTags")
     @DisplayName("Getting dto tag's list")
-    void checkGetAllShouldReturnDtoList(List<Tag> tags) {
-        List<TagEntity> tagEntities = TagMapper.INSTANCE.toEntity(tags);
+    void checkGetAllShouldReturnDtoList(List<TagDto> tagDtos) {
+        List<TagEntity> tagEntities = TagMapper.INSTANCE.toEntity(tagDtos);
         doReturn(tagEntities)
                 .when(this.tagRepositoryImpl).findAll();
 
-        List<Tag> tagsFromDb = this.tagServiceImpl.findAll();
-        assertThat(tagsFromDb).hasSameElementsAs(tags);
+        List<TagDto> tagsFromDb = this.tagServiceImpl.findAll();
+        assertThat(tagsFromDb).hasSameElementsAs(tagDtos);
     }
 
     @Test
@@ -133,22 +133,22 @@ class TagServiceImplTest {
         verify(tagRepositoryImpl).delete();
     }
 
-    static Stream<Tag> getTag() {
-        Tag tag = Tag.builder().id(1L).name("first_tag").build();
-        return Stream.of(tag);
+    static Stream<TagDto> getTag() {
+        TagDto tagDto = TagDto.builder().id(1L).name("first_tag").build();
+        return Stream.of(tagDto);
     }
 
-    static Stream<Tag> getTagWithoutId() {
-        Tag tag = Tag.builder().name("first_tag").build();
-        return Stream.of(tag);
+    static Stream<TagDto> getTagWithoutId() {
+        TagDto tagDto = TagDto.builder().name("first_tag").build();
+        return Stream.of(tagDto);
     }
 
-    static Stream<List<Tag>> getTags() {
-        Tag tag1 = Tag.builder().id(1L).name("first_tag").build();
-        Tag tag2 = Tag.builder().id(2L).name("second_tag").build();
-        Tag tag3 = Tag.builder().id(3L).name("third_tag").build();
-        List<Tag> tags = List.of(tag1, tag2, tag3);
-        return Stream.of(tags);
+    static Stream<List<TagDto>> getTags() {
+        TagDto tagDto1 = TagDto.builder().id(1L).name("first_tag").build();
+        TagDto tagDto2 = TagDto.builder().id(2L).name("second_tag").build();
+        TagDto tagDto3 = TagDto.builder().id(3L).name("third_tag").build();
+        List<TagDto> tagDtos = List.of(tagDto1, tagDto2, tagDto3);
+        return Stream.of(tagDtos);
     }
 
 }

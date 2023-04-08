@@ -10,9 +10,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.clevertec.ecl.dto.GiftCertificate;
+import ru.clevertec.ecl.dto.GiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
-import ru.clevertec.ecl.dto.Tag;
+import ru.clevertec.ecl.dto.TagDto;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.GiftCertificateMapper;
 import ru.clevertec.ecl.repository.impl.GiftCertificateDecoratorRepositoryImpl;
@@ -50,13 +50,13 @@ class GiftCertificateServiceImplTest {
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("getGiftCertificate")
     @DisplayName("Getting gift certificate dto by id")
-    void checkGetByIdShouldReturnDto(GiftCertificate giftCertificate) {
+    void checkGetByIdShouldReturnDto(GiftCertificateDto giftCertificateDto) {
         Optional<GiftCertificateEntity> optionalGiftCertificate = Optional
-                .of(GiftCertificateMapper.INSTANCE.toEntity(giftCertificate));
+                .of(GiftCertificateMapper.INSTANCE.toEntity(giftCertificateDto));
         doReturn(optionalGiftCertificate).when(this.giftCertificateDecoratorRepositoryImpl).findById(1L);
 
-        GiftCertificate giftCertificateFromDb = this.giftCertificateServiceImpl.findById(1L);
-        assertThat(giftCertificateFromDb).isEqualTo(giftCertificate);
+        GiftCertificateDto giftCertificateDtoFromDb = this.giftCertificateServiceImpl.findById(1L);
+        assertThat(giftCertificateDtoFromDb).isEqualTo(giftCertificateDto);
     }
 
     @Test
@@ -71,12 +71,12 @@ class GiftCertificateServiceImplTest {
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("getGiftCertificates")
     @DisplayName("Getting dto gift certificate's list")
-    void checkGetAllShouldReturnDtoList(List<GiftCertificate> giftCertificates) {
-        List<GiftCertificateEntity> giftCertificateEntities = GiftCertificateMapper.INSTANCE.toEntity(giftCertificates);
+    void checkGetAllShouldReturnDtoList(List<GiftCertificateDto> giftCertificateDtos) {
+        List<GiftCertificateEntity> giftCertificateEntities = GiftCertificateMapper.INSTANCE.toEntity(giftCertificateDtos);
         doReturn(giftCertificateEntities).when(this.giftCertificateDecoratorRepositoryImpl).findAll();
 
-        List<GiftCertificate> giftCertificatesFromDb = this.giftCertificateServiceImpl.findAll();
-        assertThat(giftCertificatesFromDb).hasSameElementsAs(giftCertificates);
+        List<GiftCertificateDto> giftCertificatesFromDbDto = this.giftCertificateServiceImpl.findAll();
+        assertThat(giftCertificatesFromDbDto).hasSameElementsAs(giftCertificateDtos);
     }
 
     @Test
@@ -91,14 +91,14 @@ class GiftCertificateServiceImplTest {
     @ParameterizedTest(name = "{index} - {0}")
     @MethodSource("getGiftCertificates")
     @DisplayName("Getting dto gift certificate's list with filter")
-    void checkGetAllWithFilter(List<GiftCertificate> giftCertificates) {
+    void checkGetAllWithFilter(List<GiftCertificateDto> giftCertificateDtos) {
         GiftCertificateFilter filter = new GiftCertificateFilter();
-        List<GiftCertificateEntity> giftCertificateEntities = GiftCertificateMapper.INSTANCE.toEntity(giftCertificates);
+        List<GiftCertificateEntity> giftCertificateEntities = GiftCertificateMapper.INSTANCE.toEntity(giftCertificateDtos);
         doReturn(giftCertificateEntities).when(this.giftCertificateDecoratorRepositoryImpl).getAll(filter);
 
-        List<GiftCertificate> giftCertificatesFromDb = this.giftCertificateServiceImpl.getAll(filter);
+        List<GiftCertificateDto> giftCertificatesFromDbDto = this.giftCertificateServiceImpl.getAll(filter);
 
-        assertThat(giftCertificatesFromDb).hasSameElementsAs(giftCertificates);
+        assertThat(giftCertificatesFromDbDto).hasSameElementsAs(giftCertificateDtos);
     }
 
     @Test
@@ -120,12 +120,12 @@ class GiftCertificateServiceImplTest {
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
-    static Stream<GiftCertificate> getGiftCertificate() {
-        Tag tag1 = Tag.builder().id(1L).name("first_tag").build();
-        Tag tag2 = Tag.builder().id(2L).name("second_tag").build();
-        Tag tag3 = Tag.builder().id(3L).name("third_tag").build();
-        List<Tag> tags = List.of(tag1, tag2, tag3);
-        GiftCertificate giftCertificate = GiftCertificate.builder()
+    static Stream<GiftCertificateDto> getGiftCertificate() {
+        TagDto tagDto1 = TagDto.builder().id(1L).name("first_tag").build();
+        TagDto tagDto2 = TagDto.builder().id(2L).name("second_tag").build();
+        TagDto tagDto3 = TagDto.builder().id(3L).name("third_tag").build();
+        List<TagDto> tagDtos = List.of(tagDto1, tagDto2, tagDto3);
+        GiftCertificateDto giftCertificateDto = GiftCertificateDto.builder()
                 .id(1L)
                 .name("gift")
                 .description("certificate")
@@ -133,13 +133,13 @@ class GiftCertificateServiceImplTest {
                 .duration(Duration.ofDays(10))
                 .createDate(DateUtil.getCurrentDateISO8601())
                 .lastUpdateDate(DateUtil.getCurrentDateISO8601())
-                .tags(tags)
+                .tags(tagDtos)
                 .build();
-        return Stream.of(giftCertificate);
+        return Stream.of(giftCertificateDto);
     }
 
-    static Stream<List<GiftCertificate>> getGiftCertificates() {
-        List<GiftCertificate> giftCertificates = getGiftCertificate().toList();
-        return Stream.of(giftCertificates);
+    static Stream<List<GiftCertificateDto>> getGiftCertificates() {
+        List<GiftCertificateDto> giftCertificateDtos = getGiftCertificate().toList();
+        return Stream.of(giftCertificateDtos);
     }
 }
