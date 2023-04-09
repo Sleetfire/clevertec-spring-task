@@ -1,36 +1,18 @@
 package ru.clevertec.ecl.exception;
 
-import ru.clevertec.ecl.dto.SingleResponseError;
-
 public class EssenceExistException extends RuntimeException {
 
-    private SingleResponseError error;
+    private final int errorCode;
 
-    public EssenceExistException(SingleResponseError error) {
-        this.error = error;
+    public EssenceExistException(int errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public EssenceExistException() {
-        super();
+    public String getErrorMessage() {
+        return "Tag is already existing";
     }
 
-    public EssenceExistException(String message) {
-        super(message);
-    }
-
-    public EssenceExistException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public EssenceExistException(Throwable cause) {
-        super(cause);
-    }
-
-    protected EssenceExistException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
-
-    public SingleResponseError getError() {
-        return error;
+    public int getErrorCode() {
+        return errorCode;
     }
 }

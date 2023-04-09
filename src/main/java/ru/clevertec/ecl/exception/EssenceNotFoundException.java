@@ -1,32 +1,18 @@
 package ru.clevertec.ecl.exception;
 
-import ru.clevertec.ecl.dto.SingleResponseError;
-
 public class EssenceNotFoundException extends RuntimeException {
 
-    private SingleResponseError error;
+    private final int errorCode;
 
-    public EssenceNotFoundException(SingleResponseError error) {
-        this.error = error;
+    public EssenceNotFoundException(int errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public EssenceNotFoundException() {
-        super();
+    public String getErrorMessage() {
+        return "Requested resource was not found";
     }
 
-    public EssenceNotFoundException(String message) {
-        super(message);
-    }
-
-    public EssenceNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public EssenceNotFoundException(Throwable cause) {
-        super(cause);
-    }
-
-    public SingleResponseError getError() {
-        return this.error;
+    public int getErrorCode() {
+        return errorCode;
     }
 }

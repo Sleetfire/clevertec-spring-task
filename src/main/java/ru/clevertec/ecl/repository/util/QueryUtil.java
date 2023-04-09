@@ -39,7 +39,7 @@ public class QueryUtil {
             return keyHolder.getKeyAs(Long.class);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
-            throw new SqlException(SingleResponseError.of("Bad request to the database", 50001));
+            throw new SqlException(50001);
         }
     }
 

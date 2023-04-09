@@ -4,29 +4,17 @@ import ru.clevertec.ecl.dto.SingleResponseError;
 
 public class SqlException extends RuntimeException {
 
-    private SingleResponseError error;
+    private final int errorCode;
 
-    public SqlException(SingleResponseError error) {
-        this.error = error;
+    public SqlException(int errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public SqlException() {
-        super();
+    public int getErrorCode() {
+        return errorCode;
     }
 
-    public SqlException(String message) {
-        super(message);
-    }
-
-    public SqlException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public SqlException(Throwable cause) {
-        super(cause);
-    }
-
-    public SingleResponseError getError() {
-        return error;
+    public String getErrorMessage() {
+        return "Bad request to the database";
     }
 }

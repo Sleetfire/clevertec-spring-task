@@ -15,17 +15,20 @@ public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EssenceExistException.class)
     public ResponseEntity<SingleResponseError> handleEssenceExistException(EssenceExistException e) {
-        return new ResponseEntity<>(e.getError(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(SingleResponseError.of(e.getErrorMessage(), e.getErrorCode()),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EssenceNotFoundException.class)
     public ResponseEntity<SingleResponseError> handleEssenceNotFoundException(EssenceNotFoundException e) {
-        return new ResponseEntity<>(e.getError(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(SingleResponseError.of(e.getErrorMessage(), e.getErrorCode()),
+                HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SqlException.class)
     public ResponseEntity<SingleResponseError> handleSqlException(SqlException e) {
-        return new ResponseEntity<>(e.getError(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(SingleResponseError.of(e.getErrorMessage(), e.getErrorCode()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
