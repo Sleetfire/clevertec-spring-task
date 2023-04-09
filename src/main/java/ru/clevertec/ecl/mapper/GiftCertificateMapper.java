@@ -3,7 +3,7 @@ package ru.clevertec.ecl.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import ru.clevertec.ecl.dto.GiftCertificateDto;
-import ru.clevertec.ecl.repository.entity.GiftCertificateEntity;
+import ru.clevertec.ecl.repository.entity.GiftCertificate;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import java.util.List;
 public interface GiftCertificateMapper {
     GiftCertificateMapper INSTANCE = Mappers.getMapper(GiftCertificateMapper.class);
 
-    GiftCertificateDto toDto(GiftCertificateEntity giftCertificateEntity);
+    GiftCertificateDto toDto(GiftCertificate giftCertificate);
 
-    GiftCertificateEntity toEntity(GiftCertificateDto giftCertificateDto);
+    GiftCertificate toEntity(GiftCertificateDto giftCertificateDto);
 
-    List<GiftCertificateDto> toDto(List<GiftCertificateEntity> giftCertificates);
+    List<GiftCertificateDto> toDto(List<GiftCertificate> giftCertificates);
 
-    List<GiftCertificateEntity> toEntity(List<GiftCertificateDto> giftCertificateDtos);
+    List<GiftCertificate> toEntity(List<GiftCertificateDto> giftCertificateDtos);
 }

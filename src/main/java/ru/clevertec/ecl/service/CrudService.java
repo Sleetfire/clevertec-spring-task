@@ -6,9 +6,9 @@ import java.util.List;
  * Interface {@code ICrudService} defines methods for CRUD operations
  *
  * @param <T> dto type
- * @version 0.1
+ * @version 2.1
  */
-public interface CrudService<T> {
+public interface CrudService<D, T> {
 
     /**
      * Method for creating entity
@@ -16,7 +16,7 @@ public interface CrudService<T> {
      * @param entity entity to creating
      * @return created entity
      */
-    T create(T entity);
+    D create(D entity);
 
     /**
      * Method for getting entity by id
@@ -24,14 +24,14 @@ public interface CrudService<T> {
      * @param id entity's id
      * @return entity
      */
-    T findById(long id);
+    D findById(T id);
 
     /**
      * Method for getting all entities
      *
      * @return list of entities
      */
-    List<T> findAll();
+    List<D> findAll();
 
     /**
      * Method for updating entity
@@ -40,13 +40,13 @@ public interface CrudService<T> {
      * @param updatedEntity entity with updated fields
      * @return updated entity
      */
-    T update(long id, T updatedEntity);
+    D update(T id, D updatedEntity);
 
     /**
      * Method for deleting entity by id
      *
      * @param id entity's id
      */
-    void delete(long id);
+    void delete(T id);
 
 }

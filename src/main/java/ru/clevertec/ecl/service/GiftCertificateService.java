@@ -4,13 +4,14 @@ import ru.clevertec.ecl.dto.GiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Interface {@code IGiftCertificateService} defines methods for CRUD operations with GiftCertificates
  *
  * @version 0.1
  */
-public interface GiftCertificateService extends CrudService<GiftCertificateDto> {
+public interface GiftCertificateService extends CrudService<GiftCertificateDto, Long> {
 
     /**
      * Method for creating GiftCertificate entity
@@ -28,7 +29,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto> 
      * @return GiftCertificate entity
      */
     @Override
-    GiftCertificateDto findById(long id);
+    GiftCertificateDto findById(Long id);
 
     /**
      * Method for getting all GiftCertificate entities
@@ -46,7 +47,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto> 
      * @return updated GiftCertificate entity
      */
     @Override
-    GiftCertificateDto update(long id, GiftCertificateDto updatedEntity);
+    GiftCertificateDto update(Long id, GiftCertificateDto updatedEntity);
 
     /**
      * Method for deleting GiftCertificate entity by id
@@ -54,7 +55,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto> 
      * @param id entity's id
      */
     @Override
-    void delete(long id);
+    void delete(Long id);
 
     /**
      * Method for getting GiftCertificate entities with filter
@@ -64,8 +65,4 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto> 
      */
     List<GiftCertificateDto> getAll(GiftCertificateFilter filter);
 
-    /**
-     * Method for delete all GiftCertificate entities
-     */
-    void delete();
 }

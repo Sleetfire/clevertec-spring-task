@@ -3,7 +3,7 @@ package ru.clevertec.ecl.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import ru.clevertec.ecl.dto.TagDto;
-import ru.clevertec.ecl.repository.entity.TagEntity;
+import ru.clevertec.ecl.repository.entity.Tag;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import java.util.List;
 public interface TagMapper {
     TagMapper INSTANCE = Mappers.getMapper(TagMapper.class);
 
-    TagDto toDto(TagEntity tagEntity);
+    TagDto toDto(Tag tag);
 
-    TagEntity toEntity(TagDto tagDto);
+    Tag toEntity(TagDto tagDto);
 
-    List<TagDto> toDto(List<TagEntity> tags);
+    List<TagDto> toDto(List<Tag> tags);
 
-    List<TagEntity> toEntity(List<TagDto> tags);
+    List<Tag> toEntity(List<TagDto> tags);
 }

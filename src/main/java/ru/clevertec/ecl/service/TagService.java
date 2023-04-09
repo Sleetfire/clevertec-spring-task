@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @version 0.1
  */
-public interface TagService extends CrudService<TagDto> {
+public interface TagService extends CrudService<TagDto, Long> {
 
     /**
      * Method for creating Tag entity
@@ -26,7 +26,7 @@ public interface TagService extends CrudService<TagDto> {
      * @return Tag entity
      */
     @Override
-    TagDto findById(long id);
+    TagDto findById(Long id);
 
     /**
      * Method for getting all Tag entities
@@ -42,14 +42,14 @@ public interface TagService extends CrudService<TagDto> {
      * @return updated Tag entity
      */
     @Override
-    TagDto update(long id, TagDto updated);
+    TagDto update(Long id, TagDto updated);
 
     /**
      * Method for deleting Tag entity by id
      * @param id entity's id
      */
     @Override
-    void delete(long id);
+    void delete(Long id);
 
     /**
      * Method for getting Tag entity by Tag name
@@ -57,10 +57,5 @@ public interface TagService extends CrudService<TagDto> {
      * @return Tag entity
      */
     TagDto findByName(String name);
-
-    /**
-     * Method for delete all Tag entities
-     */
-    void delete();
 
 }
