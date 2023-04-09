@@ -1,12 +1,13 @@
 plugins {
     id 'groovy'
     id 'java'
-    id 'war'
-    id "org.gretty" version "4.0.3"
+    id 'org.springframework.boot' version '3.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
 }
 
-sourceCompatibility = 17
-targetCompatibility = 17
+group = 'ru.clevertec'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
@@ -18,38 +19,25 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.6.0'
     implementation 'com.h2database:h2:2.1.214'
 
-    compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '6.0.0'
-    implementation group: 'org.springframework', name: 'spring-webmvc', version: '6.0.6'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     testImplementation 'org.assertj:assertj-core:3.24.2'
     testImplementation 'org.mockito:mockito-inline:5.2.0'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.2.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
-    testImplementation 'org.springframework:spring-test:6.0.7'
 
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
-    implementation 'org.slf4j:slf4j-log4j12:2.0.5'
-
-}
-
-
-gretty {
-    httpPort = 8080
-    contextPath = '/'
-    servletContainer = 'tomcat10'
 }
 
 tasks.named('test') {
-    // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
 
