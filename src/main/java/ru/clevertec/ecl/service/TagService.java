@@ -1,5 +1,7 @@
 package ru.clevertec.ecl.service;
 
+import org.springframework.data.domain.Pageable;
+import ru.clevertec.ecl.dto.PageDto;
 import ru.clevertec.ecl.dto.TagDto;
 
 import java.util.List;
@@ -57,5 +59,12 @@ public interface TagService extends CrudService<TagDto, Long> {
      * @return Tag entity
      */
     TagDto findByName(String name);
+
+    /**
+     * Method for getting page of tags
+     * @param pageable for pagination
+     * @return dto page of tags
+     */
+    PageDto<TagDto> findPage(Pageable pageable);
 
 }

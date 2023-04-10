@@ -1,10 +1,11 @@
 package ru.clevertec.ecl.service;
 
+import org.springframework.data.domain.Pageable;
 import ru.clevertec.ecl.dto.GiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
+import ru.clevertec.ecl.dto.PageDto;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Interface {@code IGiftCertificateService} defines methods for CRUD operations with GiftCertificates
@@ -40,6 +41,14 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto, 
     List<GiftCertificateDto> findAll();
 
     /**
+     * Method for getting page of gift certificates
+     *
+     * @param pageable for pagination
+     * @return dto page of gift certificates
+     */
+    PageDto<GiftCertificateDto> findAll(Pageable pageable);
+
+    /**
      * Method for updating GiftCertificate entity
      *
      * @param id            entity's id
@@ -63,6 +72,6 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto, 
      * @param filter filter with search fields
      * @return list of GiftCertificate entities
      */
-    List<GiftCertificateDto> getAll(GiftCertificateFilter filter);
+    List<GiftCertificateDto> findAllFiltered(GiftCertificateFilter filter);
 
 }
