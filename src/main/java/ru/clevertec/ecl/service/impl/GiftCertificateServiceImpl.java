@@ -1,18 +1,22 @@
 package ru.clevertec.ecl.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.GiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
+import ru.clevertec.ecl.dto.PageDto;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.GiftCertificateMapper;
 import ru.clevertec.ecl.repository.GiftCertificateRepository;
 import ru.clevertec.ecl.repository.entity.GiftCertificate;
 import ru.clevertec.ecl.service.GiftCertificateService;
 import ru.clevertec.ecl.util.DateUtil;
+import ru.clevertec.ecl.util.SortingUtil;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,7 +46,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public GiftCertificateDto findById(Long id) {
         Optional<GiftCertificate> optionalGiftCertificate = giftCertificateRepository.findById(id);
         if (optionalGiftCertificate.isEmpty()) {
-            throw new EssenceNotFoundException( 40401);
+            throw new EssenceNotFoundException(40401);
         }
         return giftCertificateMapper.toDto(optionalGiftCertificate.get());
     }
@@ -57,13 +61,24 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
-    public List<GiftCertificateDto> getAll(GiftCertificateFilter filter) {
-//        List<GiftCertificate> giftCertificates = giftCertificateRepository.findAll(filter);
-//        if (giftCertificates.isEmpty()) {
-//            throw new EssenceNotFoundException(40403);
-//        }
-//        return giftCertificateMapper.toDto(giftCertificates);
-        return Collections.emptyList();
+    public PageDto<GiftCertificateDto> findAll(Pageable pageable) {
+        Page<GiftCertificate> giftCertificatePage = giftCertificateRepository.findAll(pageable);
+        return convertToPageDto(giftCertificatePage);
+    }
+
+    @Override
+    public List<GiftCertificateDto> findAllFiltered(GiftCertificateFilter filter) {
+        String pattern = "%" + filter.getFieldPart() + "%";
+        String tagName = filter.getTagName();
+        Sort sort = SortingUtil.getSort(filter);
+
+        List<GiftCertificate> giftCertificates = giftCertificateRepository
+                .findAllFiltered(pattern, pattern, tagName, sort);
+
+        if (giftCertificates.isEmpty()) {
+            throw new EssenceNotFoundException(40403);
+        }
+        return giftCertificateMapper.toDto(giftCertificates);
     }
 
     @Override
@@ -99,6 +114,23 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public void delete(Long id) {
         findById(id);
         giftCertificateRepository.deleteById(id);
+    }
+
+    private PageDto<GiftCertificateDto> convertToPageDto(Page<GiftCertificate> page) {
+        List<GiftCertificate> content = page.getContent();
+        if (content.isEmpty()) {
+            throw new EssenceNotFoundException(40402);
+        }
+        return PageDto.Builder.createBuilder(GiftCertificateDto.class)
+                .setNumber(page.getNumber())
+                .setSize(page.getSize())
+                .setTotalPages(page.getTotalPages())
+                .setTotalElements(page.getTotalElements())
+                .setFirst(page.isFirst())
+                .setNumberOfElements(page.getNumberOfElements())
+                .setLast(page.isLast())
+                .setContent(giftCertificateMapper.toDto(content))
+                .build();
     }
 
 }

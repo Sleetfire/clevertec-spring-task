@@ -1,7 +1,10 @@
 package ru.clevertec.ecl.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.clevertec.ecl.dto.PageDto;
 import ru.clevertec.ecl.dto.TagDto;
 import ru.clevertec.ecl.exception.EssenceExistException;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
@@ -65,6 +68,12 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public PageDto<TagDto> findPage(Pageable pageable) {
+        Page<Tag> tagPage = tagRepository.findAll(pageable);
+        return convertToPageDto(tagPage);
+    }
+
+    @Override
     @Transactional
     public TagDto update(Long id, TagDto updated) {
         TagDto fromDb = findById(id);
@@ -78,6 +87,23 @@ public class TagServiceImpl implements TagService {
     public void delete(Long id) {
         findById(id);
         tagRepository.deleteById(id);
+    }
+
+    private PageDto<TagDto> convertToPageDto(Page<Tag> page) {
+        List<Tag> content = page.getContent();
+        if (content.isEmpty()) {
+            throw new EssenceNotFoundException(40402);
+        }
+        return PageDto.Builder.createBuilder(TagDto.class)
+                .setNumber(page.getNumber())
+                .setSize(page.getSize())
+                .setTotalPages(page.getTotalPages())
+                .setTotalElements(page.getTotalElements())
+                .setFirst(page.isFirst())
+                .setNumberOfElements(page.getNumberOfElements())
+                .setLast(page.isLast())
+                .setContent(tagMapper.toDto(content))
+                .build();
     }
 
 }
