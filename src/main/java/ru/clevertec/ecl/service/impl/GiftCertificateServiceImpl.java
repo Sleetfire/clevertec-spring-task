@@ -52,6 +52,15 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
+    public GiftCertificateDto findByName(String name) {
+        Optional<GiftCertificate> optionalGiftCertificate = giftCertificateRepository.findByName(name);
+        if (optionalGiftCertificate.isEmpty()) {
+            throw new EssenceNotFoundException(40401);
+        }
+        return giftCertificateMapper.toDto(optionalGiftCertificate.get());
+    }
+
+    @Override
     public List<GiftCertificateDto> findAll() {
         List<GiftCertificate> giftCertificates = giftCertificateRepository.findAll();
         if (giftCertificates.isEmpty()) {

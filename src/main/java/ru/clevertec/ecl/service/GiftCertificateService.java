@@ -24,10 +24,10 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto, 
     GiftCertificateDto create(GiftCertificateDto entity);
 
     /**
-     * Method for getting GiftCertificate entity by id
+     * Method for getting GiftCertificate dto by id
      *
      * @param id entity's id
-     * @return GiftCertificate entity
+     * @return GiftCertificate dto
      */
     @Override
     GiftCertificateDto findById(Long id);
@@ -35,7 +35,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto, 
     /**
      * Method for getting all GiftCertificate entities
      *
-     * @return list of GiftCertificate entities
+     * @return list of GiftCertificate dto
      */
     @Override
     List<GiftCertificateDto> findAll();
@@ -53,7 +53,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto, 
      *
      * @param id            entity's id
      * @param updatedEntity entity with updated fields
-     * @return updated GiftCertificate entity
+     * @return updated GiftCertificate dto
      */
     @Override
     GiftCertificateDto update(Long id, GiftCertificateDto updatedEntity);
@@ -61,7 +61,7 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto, 
     /**
      * Method for deleting GiftCertificate entity by id
      *
-     * @param id entity's id
+     * @param id gift certificate's id
      */
     @Override
     void delete(Long id);
@@ -73,5 +73,12 @@ public interface GiftCertificateService extends CrudService<GiftCertificateDto, 
      * @return list of GiftCertificate entities
      */
     List<GiftCertificateDto> findAllFiltered(GiftCertificateFilter filter);
+
+    /**
+     * Method for getting GiftCertificate by name
+     * @param name gift certificate's name
+     * @return gift certificate dto
+     */
+    GiftCertificateDto findByName(String name);
 
 }
