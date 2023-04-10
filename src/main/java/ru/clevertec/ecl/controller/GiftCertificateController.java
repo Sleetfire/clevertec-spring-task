@@ -1,5 +1,7 @@
 package ru.clevertec.ecl.controller;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.clevertec.ecl.dto.GiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
+import ru.clevertec.ecl.dto.PageDto;
+import ru.clevertec.ecl.exception.IllegalRequestParamException;
 import ru.clevertec.ecl.service.GiftCertificateService;
 
 import java.util.List;
@@ -47,15 +51,29 @@ public class GiftCertificateController {
         return new ResponseEntity<>(this.giftCertificateService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/page", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<PageDto<GiftCertificateDto>> getPage(@RequestParam(defaultValue = "0", required = false) int page,
+                                                               @RequestParam(defaultValue = "1", required = false) int size) {
+        if (page < 0) {
+            throw new IllegalRequestParamException(40001);
+        }
+        if (size < 1) {
+            throw new IllegalRequestParamException(40001);
+        }
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>(giftCertificateService.findAll(pageable), HttpStatus.OK);
+
+    }
+
     @GetMapping(value  = "/filter", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<GiftCertificateDto>> getAllFiltered(@RequestParam MultiValueMap<String, String> multiValueMap) {
         GiftCertificateFilter filter = GiftCertificateFilter.builder()
-                .tagName(multiValueMap.get("tag_name").get(0))
-                .fieldPart(multiValueMap.get("search_word").get(0))
-                .sortName(multiValueMap.get("sort_name").get(0))
-                .sortDate(multiValueMap.get("sort_date").get(0))
+                .tagName(multiValueMap.get("tag_name") != null ? multiValueMap.get("tag_name").get(0) : null)
+                .fieldPart(multiValueMap.get("search_word") != null ? multiValueMap.get("search_word").get(0) : null)
+                .sortName(multiValueMap.get("sort_name") != null ? multiValueMap.get("sort_name").get(0) : null)
+                .sortDate(multiValueMap.get("sort_date") != null ? multiValueMap.get("sort_date").get(0) : null)
                 .build();
-        return new ResponseEntity<>(this.giftCertificateService.getAll(filter), HttpStatus.OK);
+        return new ResponseEntity<>(this.giftCertificateService.findAllFiltered(filter), HttpStatus.OK);
     }
 
     @PatchMapping(value = "/{id}",
