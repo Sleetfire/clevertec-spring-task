@@ -23,6 +23,28 @@ CREATE TABLE IF NOT EXISTS ecl.gift_certificates_tags (
     CONSTRAINT tags_fk FOREIGN KEY (tag_id) REFERENCES ecl.tags(id)
 );
 
+CREATE TABLE IF NOT EXISTS ecl.users (
+    id bigserial PRIMARY KEY,
+    username character varying (20) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ecl.orders (
+    id bigserial PRIMARY KEY,
+    user_id bigint NOT NULL,
+    cost numeric NOT NULL,
+    create_date character varying (30) NOT NULL,
+    status character varying (10) NOT NULL,
+    CONSTRAINT orders_fk FOREIGN KEY (user_id) REFERENCES ecl.users(id)
+);
+
+CREATE TABLE IF NOT EXISTS ecl.gift_certificates_orders (
+     id bigserial PRIMARY KEY,
+     gift_certificate_id bigserial,
+     order_id bigserial,
+     CONSTRAINT gift_certificates_fk FOREIGN KEY (gift_certificate_id) REFERENCES ecl.gift_certificates(id),
+     CONSTRAINT orders_fk FOREIGN KEY (order_id) REFERENCES ecl.orders(id)
+    );
+
 CREATE OR REPLACE FUNCTION pattern_find_certificates(argument CHARACTER) RETURNS TABLE(id BIGINT, name CHARACTER VARYING, description CHARACTER VARYING,
                                                                                        price DECIMAL, duration BIGINT, create_date CHARACTER VARYING,
                                                                                        last_update_date CHARACTER VARYING, tag_id BIGINT,
