@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import ru.clevertec.ecl.dto.CreateGiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
 import ru.clevertec.ecl.dto.PageDto;
 import ru.clevertec.ecl.exception.IllegalRequestParamException;
-import ru.clevertec.ecl.service.GiftCertificateService;
+import ru.clevertec.ecl.service.impl.GiftCertificateDecoratorServiceImpl;
 
 import java.util.List;
 
@@ -28,16 +29,16 @@ import java.util.List;
 @RequestMapping(value = "/certificates")
 public class GiftCertificateController {
 
-    private final GiftCertificateService giftCertificateService;
+    private final GiftCertificateDecoratorServiceImpl giftCertificateService;
 
-    public GiftCertificateController(GiftCertificateService giftCertificateService) {
+    public GiftCertificateController(GiftCertificateDecoratorServiceImpl giftCertificateService) {
         this.giftCertificateService = giftCertificateService;
     }
 
     @PostMapping(value = "/",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<GiftCertificateDto> create(@RequestBody GiftCertificateDto giftCertificateDto) {
+    public ResponseEntity<GiftCertificateDto> create(@RequestBody CreateGiftCertificateDto giftCertificateDto) {
         return new ResponseEntity<>(this.giftCertificateService.create(giftCertificateDto), HttpStatus.CREATED);
     }
 
