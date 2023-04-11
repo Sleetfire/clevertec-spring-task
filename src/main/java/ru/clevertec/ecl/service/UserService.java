@@ -1,10 +1,7 @@
 package ru.clevertec.ecl.service;
 
 import org.springframework.data.domain.Pageable;
-import ru.clevertec.ecl.dto.CreateOrderDto;
-import ru.clevertec.ecl.dto.OrderDto;
-import ru.clevertec.ecl.dto.PageDto;
-import ru.clevertec.ecl.dto.UserDto;
+import ru.clevertec.ecl.dto.*;
 
 import java.util.List;
 
@@ -23,5 +20,7 @@ public interface UserService {
     OrderDto makeOrder(CreateOrderDto createOrderDto);
 
     PageDto<OrderDto> findOrders(String username, Pageable pageable);
+
+    TagDto findMostWidelyUsedTagByUsername(String username);
 
 }

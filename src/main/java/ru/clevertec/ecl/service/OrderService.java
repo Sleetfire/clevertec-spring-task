@@ -20,4 +20,6 @@ public interface OrderService {
 
     PageDto<OrderDto> findPageByUsername(String username, Pageable pageable);
 
+    OrderDto findOrderWithMaxCostByUsername(String username);
+
 }

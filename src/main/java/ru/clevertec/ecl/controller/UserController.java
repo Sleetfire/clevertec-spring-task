@@ -6,10 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.clevertec.ecl.dto.CreateOrderDto;
-import ru.clevertec.ecl.dto.OrderDto;
-import ru.clevertec.ecl.dto.PageDto;
-import ru.clevertec.ecl.dto.UserDto;
+import ru.clevertec.ecl.dto.*;
 import ru.clevertec.ecl.exception.IllegalRequestParamException;
 import ru.clevertec.ecl.service.UserService;
 
@@ -49,6 +46,11 @@ public class UserController {
         }
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(userService.findOrders(username, pageable), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/orders/tags/{username}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<TagDto> getMostWidelyUsedTagByUsername(@PathVariable String username) {
+        return new ResponseEntity<>(userService.findMostWidelyUsedTagByUsername(username), HttpStatus.OK);
     }
 
 }

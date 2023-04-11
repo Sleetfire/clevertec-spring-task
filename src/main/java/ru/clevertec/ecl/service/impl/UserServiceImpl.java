@@ -11,12 +11,12 @@ import ru.clevertec.ecl.repository.UserRepository;
 import ru.clevertec.ecl.repository.entity.User;
 import ru.clevertec.ecl.service.GiftCertificateService;
 import ru.clevertec.ecl.service.OrderService;
+import ru.clevertec.ecl.service.TagService;
 import ru.clevertec.ecl.service.UserService;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,13 +25,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final OrderService orderService;
     private final GiftCertificateService giftCertificateService;
+    private final TagService tagService;
     private final UserMapper userMapper;
 
     public UserServiceImpl(UserRepository userRepository, OrderService orderService,
-                           GiftCertificateService giftCertificateService, UserMapper userMapper) {
+                           GiftCertificateService giftCertificateService, TagService tagService, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.orderService = orderService;
         this.giftCertificateService = giftCertificateService;
+        this.tagService = tagService;
         this.userMapper = userMapper;
     }
 
@@ -94,8 +96,30 @@ public class UserServiceImpl implements UserService {
         return orderService.create(orderDto);
     }
 
+    @Override
     public PageDto<OrderDto> findOrders(String username, Pageable pageable) {
         return orderService.findPageByUsername(username, pageable);
+    }
+
+    @Override
+    public TagDto findMostWidelyUsedTagByUsername(String username) {
+        OrderDto orderDto = orderService.findOrderWithMaxCostByUsername(username);
+        List<GiftCertificateDto> certificates = orderDto.getCertificates();
+        Map<String, List<TagDto>> collect = certificates.stream()
+                .flatMap(giftCertificateDto -> giftCertificateDto.getTags().stream())
+                .collect(Collectors.groupingBy(TagDto::getName));
+        Map<TagDto, Integer> resultMap = new HashMap<>();
+        collect.forEach((name, tags) -> resultMap.put(tagService.findByName(name), tags.size()));
+
+        Optional<TagDto> result = resultMap.entrySet()
+                .stream()
+                .sorted()
+                .map(Map.Entry::getKey)
+                .findFirst();
+        if (result.isEmpty()) {
+            throw new RuntimeException();
+        }
+        return result.get();
     }
 
     private PageDto<UserDto> convertToPageDto(Page<User> page) {

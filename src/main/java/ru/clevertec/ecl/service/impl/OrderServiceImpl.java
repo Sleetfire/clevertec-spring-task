@@ -2,11 +2,13 @@ package ru.clevertec.ecl.service.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.OrderDto;
 import ru.clevertec.ecl.dto.OrderStatus;
 import ru.clevertec.ecl.dto.PageDto;
+import ru.clevertec.ecl.dto.UserDto;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.OrderMapper;
 import ru.clevertec.ecl.repository.OrderRepository;
@@ -64,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> findAllByUsername(String username) {
-        List<Order> orders = orderRepository.findAllByUsername(username);
+        List<Order> orders = orderRepository.findAllByUsername(username, Sort.by("id").ascending());
         if (orders.isEmpty()) {
             throw new EssenceNotFoundException(40401);
         }
@@ -75,6 +77,15 @@ public class OrderServiceImpl implements OrderService {
     public PageDto<OrderDto> findPageByUsername(String username, Pageable pageable) {
         Page<Order> page = orderRepository.findAllByUsername(username, pageable);
         return convertToPageDto(page);
+    }
+
+    @Override
+    public OrderDto findOrderWithMaxCostByUsername(String username) {
+        List<Order> orders = orderRepository.findAllByUsername(username, Sort.by("cost").descending());
+        if (orders.isEmpty()) {
+            throw new EssenceNotFoundException(40401);
+        }
+        return orderMapper.toDto(orders.get(0));
     }
 
     private PageDto<OrderDto> convertToPageDto(Page<Order> page) {
