@@ -22,6 +22,6 @@ public class User implements BaseEntity<Long> {
 
     @Override
     public Long getId() {
-        return null;
+        return this.id;
     }
 }
