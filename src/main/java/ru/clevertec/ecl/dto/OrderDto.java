@@ -1,5 +1,6 @@
 package ru.clevertec.ecl.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,11 +15,15 @@ import java.util.List;
 @Builder
 public class OrderDto {
 
+    @JsonIgnore
     private long id;
+    @JsonIgnore
     private UserDto user;
+    @JsonIgnore
     private List<GiftCertificateDto> certificates;
     private BigDecimal cost;
     private String createDate;
+    @JsonIgnore
     private OrderStatus status;
 
 }
