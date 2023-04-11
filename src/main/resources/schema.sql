@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS ecl.orders (
 
 CREATE TABLE IF NOT EXISTS ecl.gift_certificates_orders (
      id bigserial PRIMARY KEY,
-     gift_certificate_id bigserial,
      order_id bigserial,
+     gift_certificate_id bigserial,
      CONSTRAINT gift_certificates_fk FOREIGN KEY (gift_certificate_id) REFERENCES ecl.gift_certificates(id),
      CONSTRAINT orders_fk FOREIGN KEY (order_id) REFERENCES ecl.orders(id)
     );
