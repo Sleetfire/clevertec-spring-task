@@ -16,10 +16,12 @@ public interface UserService {
 
     UserDto findByUsername(String username);
 
-    List<UserDto> getAll();
+    List<UserDto> findAll();
 
-    PageDto<UserDto> getPage(Pageable pageable);
+    PageDto<UserDto> findPage(Pageable pageable);
 
     OrderDto makeOrder(CreateOrderDto createOrderDto);
+
+    PageDto<OrderDto> findOrders(String username, Pageable pageable);
 
 }

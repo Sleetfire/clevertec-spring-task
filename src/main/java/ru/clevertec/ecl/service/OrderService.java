@@ -10,10 +10,14 @@ public interface OrderService {
 
     OrderDto create(OrderDto orderDto);
 
-    OrderDto getById(Long id);
+    OrderDto findById(Long id);
 
-    List<OrderDto> getAll();
+    List<OrderDto> findAll();
 
-    PageDto<OrderDto> getPage(Pageable pageable);
+    PageDto<OrderDto> findPage(Pageable pageable);
+
+    List<OrderDto> findAllByUsername(String username);
+
+    PageDto<OrderDto> findPageByUsername(String username, Pageable pageable);
 
 }

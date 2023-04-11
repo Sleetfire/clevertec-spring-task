@@ -1,5 +1,6 @@
 package ru.clevertec.ecl.service.impl;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAll() {
+    public List<UserDto> findAll() {
         List<User> users = userRepository.findAll();
         if (users.isEmpty()) {
             throw new EssenceNotFoundException(40401);
@@ -69,8 +70,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageDto<UserDto> getPage(Pageable pageable) {
-        return null;
+    public PageDto<UserDto> findPage(Pageable pageable) {
+        Page<User> page = userRepository.findAll(pageable);
+        return convertToPageDto(page);
     }
 
     @Override
@@ -90,5 +92,26 @@ public class UserServiceImpl implements UserService {
                 .cost(cost)
                 .build();
         return orderService.create(orderDto);
+    }
+
+    public PageDto<OrderDto> findOrders(String username, Pageable pageable) {
+        return orderService.findPageByUsername(username, pageable);
+    }
+
+    private PageDto<UserDto> convertToPageDto(Page<User> page) {
+        List<User> content = page.getContent();
+        if (content.isEmpty()) {
+            throw new EssenceNotFoundException(40402);
+        }
+        return PageDto.Builder.createBuilder(UserDto.class)
+                .setNumber(page.getNumber())
+                .setSize(page.getSize())
+                .setTotalPages(page.getTotalPages())
+                .setTotalElements(page.getTotalElements())
+                .setFirst(page.isFirst())
+                .setNumberOfElements(page.getNumberOfElements())
+                .setLast(page.isLast())
+                .setContent(userMapper.toDto(content))
+                .build();
     }
 }
