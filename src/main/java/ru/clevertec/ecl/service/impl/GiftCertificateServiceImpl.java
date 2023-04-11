@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.GiftCertificateDto;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
 import ru.clevertec.ecl.dto.PageDto;
@@ -22,6 +23,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     private final GiftCertificateRepository giftCertificateRepository;
@@ -34,6 +36,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
+    @Transactional
     public GiftCertificateDto create(GiftCertificateDto entity) {
         String currentDate = DateUtil.getCurrentDateISO8601();
         entity.setCreateDate(currentDate);
@@ -91,6 +94,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
+    @Transactional
     public GiftCertificateDto update(Long id, GiftCertificateDto updatedEntity) {
         GiftCertificateDto giftCertificateFromDb = findById(id);
 
@@ -120,6 +124,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         findById(id);
         giftCertificateRepository.deleteById(id);
