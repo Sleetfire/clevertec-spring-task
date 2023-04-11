@@ -30,8 +30,8 @@ public class Order implements BaseEntity<Long> {
     @JoinTable(
             schema = "ecl",
             name = "gift_certificates_orders",
-            joinColumns = {@JoinColumn(name = "gift_certificate_id")},
-            inverseJoinColumns = {@JoinColumn(name = "order_id")}
+            joinColumns = {@JoinColumn(name = "order_id")},
+            inverseJoinColumns = {@JoinColumn(name = "gift_certificate_id")}
     )
     List<GiftCertificate> giftCertificates;
     private BigDecimal cost;
@@ -42,6 +42,6 @@ public class Order implements BaseEntity<Long> {
 
     @Override
     public Long getId() {
-        return null;
+        return this.id;
     }
 }
