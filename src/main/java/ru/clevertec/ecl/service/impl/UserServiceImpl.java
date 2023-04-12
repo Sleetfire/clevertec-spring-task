@@ -113,11 +113,11 @@ public class UserServiceImpl implements UserService {
 
         Optional<TagDto> result = resultMap.entrySet()
                 .stream()
-                .sorted()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .map(Map.Entry::getKey)
                 .findFirst();
         if (result.isEmpty()) {
-            throw new RuntimeException();
+            throw new EssenceNotFoundException(40404);
         }
         return result.get();
     }
