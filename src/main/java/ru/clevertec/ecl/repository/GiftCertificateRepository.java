@@ -17,8 +17,11 @@ import java.util.Optional;
 @Repository
 public interface GiftCertificateRepository extends JpaRepository<GiftCertificate, Long> {
 
-    @Query("select g from GiftCertificate g left join g.tags t where (g.name like ?1 or g.description like ?2) or t.name = ?3")
-    List<GiftCertificate> findAllFiltered(String name, String description, String tagName, Sort sort);
+    @Query("select g from GiftCertificate g left join g.tags t " +
+            "where (g.name like ?1 or g.description like ?2) " +
+            "or (g.id in (select g.id from GiftCertificate g left join g.tags t where t.name in (?3) " +
+            "group by g having count (distinct t.name) = ?4))")
+    List<GiftCertificate> findAllFiltered(String name, String description, List<String> tagNames, int listSize, Sort sort);
 
     Optional<GiftCertificate> findByName(String name);
 

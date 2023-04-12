@@ -81,11 +81,11 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     @Override
     public List<GiftCertificateDto> findAllFiltered(GiftCertificateFilter filter) {
         String pattern = "%" + filter.getFieldPart() + "%";
-        String tagName = filter.getTagName();
+        List<String> tagNames = filter.getTagNames();
         Sort sort = SortingUtil.getSort(filter);
 
         List<GiftCertificate> giftCertificates = giftCertificateRepository
-                .findAllFiltered(pattern, pattern, tagName, sort);
+                .findAllFiltered(pattern, pattern, tagNames, tagNames.size(), sort);
 
         if (giftCertificates.isEmpty()) {
             throw new EssenceNotFoundException(40403);

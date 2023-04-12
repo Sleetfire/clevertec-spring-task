@@ -23,6 +23,7 @@ import ru.clevertec.ecl.dto.PageDto;
 import ru.clevertec.ecl.exception.IllegalRequestParamException;
 import ru.clevertec.ecl.service.impl.GiftCertificateDecoratorServiceImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -69,7 +70,7 @@ public class GiftCertificateController {
     @GetMapping(value  = "/filter", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<GiftCertificateDto>> getAllFiltered(@RequestParam MultiValueMap<String, String> multiValueMap) {
         GiftCertificateFilter filter = GiftCertificateFilter.builder()
-                .tagName(multiValueMap.get("tag_name") != null ? multiValueMap.get("tag_name").get(0) : null)
+                .tagNames(multiValueMap.get("tag_name") != null ? multiValueMap.get("tag_name") : Collections.emptyList())
                 .fieldPart(multiValueMap.get("search_word") != null ? multiValueMap.get("search_word").get(0) : null)
                 .sortName(multiValueMap.get("sort_name") != null ? multiValueMap.get("sort_name").get(0) : null)
                 .sortDate(multiValueMap.get("sort_date") != null ? multiValueMap.get("sort_date").get(0) : null)

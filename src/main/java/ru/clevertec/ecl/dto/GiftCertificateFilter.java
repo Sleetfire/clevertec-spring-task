@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class GiftCertificateFilter {
 
-    private String tagName;
+    private List<String> tagNames;
     private String fieldPart;
     private String sortName;
     private String sortDate;
