@@ -8,6 +8,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.clevertec.ecl.dto.SingleResponseError;
 import ru.clevertec.ecl.exception.EssenceExistException;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
+import ru.clevertec.ecl.exception.IllegalRequestParamException;
 import ru.clevertec.ecl.exception.SqlException;
 
 @ControllerAdvice
@@ -29,6 +30,12 @@ public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<SingleResponseError> handleSqlException(SqlException e) {
         return new ResponseEntity<>(SingleResponseError.of(e.getErrorMessage(), e.getErrorCode()),
                 HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(IllegalRequestParamException.class)
+    public ResponseEntity<SingleResponseError> handleIllegalRequestParamException(IllegalRequestParamException e) {
+        return new ResponseEntity<>(SingleResponseError.of(e.getErrorMessage(), e.getErrorCode()),
+                HttpStatus.BAD_REQUEST);
     }
 
 }
