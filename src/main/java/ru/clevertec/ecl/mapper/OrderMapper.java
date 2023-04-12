@@ -17,10 +17,8 @@ public interface OrderMapper {
     @Mapping(source = "orderDto.certificates", target = "giftCertificates")
     Order toEntity(OrderDto orderDto);
 
-    @Mapping(source = "orders.giftCertificates", target = "certificates")
     List<OrderDto> toDto(List<Order> orders);
 
-    @Mapping(source = "orders.certificates", target = "giftCertificates")
     List<Order> toEntity(List<OrderDto> orders);
 
 }
