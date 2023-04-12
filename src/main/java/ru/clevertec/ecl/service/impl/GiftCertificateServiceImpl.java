@@ -119,6 +119,8 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
             giftCertificateFromDb.setDuration(duration);
         }
 
+        giftCertificateFromDb.setLastUpdateDate(DateUtil.getCurrentDateISO8601());
+
         giftCertificateRepository.save(giftCertificateMapper.toEntity(giftCertificateFromDb));
         return findById(id);
     }
