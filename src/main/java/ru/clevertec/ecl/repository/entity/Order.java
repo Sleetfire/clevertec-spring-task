@@ -26,7 +26,7 @@ public class Order implements BaseEntity<Long> {
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             schema = "ecl",
             name = "gift_certificates_orders",
