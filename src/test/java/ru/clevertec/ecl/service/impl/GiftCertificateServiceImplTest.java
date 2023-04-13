@@ -57,8 +57,9 @@ class GiftCertificateServiceImplTest {
 
         assertThat(giftCertificateDtoFromDb)
                 .usingRecursiveComparison()
-                .isEqualTo(giftCertificateDto)
-                .comparingOnlyFields("name", "description", "price", "duration");
+                .comparingOnlyFields("name", "description", "price", "duration")
+                .isEqualTo(giftCertificateDto);
+
     }
 
     @Test
@@ -89,8 +90,8 @@ class GiftCertificateServiceImplTest {
 
         assertThat(giftCertificateDtoFromDb)
                 .usingRecursiveComparison()
-                .isEqualTo(giftCertificateDto)
-                .comparingOnlyFields("name", "description", "price", "duration");
+                .comparingOnlyFields("name", "description", "price", "duration")
+                .isEqualTo(giftCertificateDto);
     }
 
     @Test
