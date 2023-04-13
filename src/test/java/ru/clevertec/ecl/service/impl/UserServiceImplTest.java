@@ -165,14 +165,6 @@ class UserServiceImplTest {
                 .isInstanceOf(EssenceNotFoundException.class);
     }
 
-    @Test
-    void makeOrder() {
-    }
-
-    @Test
-    void findMostWidelyUsedTagByUsername() {
-    }
-
     User getUser() {
         return User.builder().id(1L).username("user").build();
     }
