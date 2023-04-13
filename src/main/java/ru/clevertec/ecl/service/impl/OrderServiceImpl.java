@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.OrderDto;
 import ru.clevertec.ecl.dto.OrderStatus;
 import ru.clevertec.ecl.dto.PageDto;
-import ru.clevertec.ecl.dto.UserDto;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
 import ru.clevertec.ecl.mapper.OrderMapper;
 import ru.clevertec.ecl.repository.OrderRepository;
