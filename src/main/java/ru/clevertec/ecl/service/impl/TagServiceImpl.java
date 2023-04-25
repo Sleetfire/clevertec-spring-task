@@ -76,16 +76,17 @@ public class TagServiceImpl implements TagService {
     @Override
     @Transactional
     public TagDto update(Long id, TagDto updated) {
-        TagDto fromDb = findById(id);
-        fromDb.setName(updated.getName());
-        Tag saved = tagRepository.save(tagMapper.toEntity(fromDb));
+        //TagDto fromDb = findById(id);
+        //fromDb.setName(updated.getName());
+        updated.setId(id);
+        Tag saved = tagRepository.save(tagMapper.toEntity(updated));
         return tagMapper.toDto(saved);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        findById(id);
+        //findById(id);
         tagRepository.deleteById(id);
     }
 
