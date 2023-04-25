@@ -7,3 +7,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/ecl?ApplicationName=TestSweetApp
     username: postgres
     password: 12378
+  liquibase:
+    change-log: db.changelog-master.yaml
+    enabled: false
