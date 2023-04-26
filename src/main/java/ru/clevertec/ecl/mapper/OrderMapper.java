@@ -8,7 +8,7 @@ import ru.clevertec.ecl.repository.entity.Order;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface OrderMapper {
 
     @Mapping(source = "order.giftCertificates", target = "certificates")

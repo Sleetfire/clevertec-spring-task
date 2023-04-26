@@ -6,7 +6,7 @@ import ru.clevertec.ecl.repository.entity.User;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface UserMapper {
 
     UserDto toDto(User user);
