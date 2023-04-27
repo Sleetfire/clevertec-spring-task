@@ -22,9 +22,11 @@ import static ru.clevertec.ecl.util.ErrorMessage.TAG_EXISTING_ERROR;
 public class TagServiceImpl implements TagService {
 
     private final TagRepository tagRepository;
+    private final TagMapper tagMapper;
 
-    public TagServiceImpl(TagRepository tagRepository) {
+    public TagServiceImpl(TagRepository tagRepository, TagMapper tagMapper) {
         this.tagRepository = tagRepository;
+        this.tagMapper = tagMapper;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class TagServiceImpl implements TagService {
         if (optionalTag.isPresent()) {
             throw new EssenceExistException(SingleResponseError.of(TAG_EXISTING_ERROR, 40001));
         }
-        long tagId = this.tagRepository.create(TagMapper.INSTANCE.toEntity(tag));
+        long tagId = this.tagRepository.create(tagMapper.toEntity(tag));
         return this.getById(tagId);
     }
 
@@ -45,7 +47,7 @@ public class TagServiceImpl implements TagService {
         if (optionalTag.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
         }
-        return TagMapper.INSTANCE.toDto(optionalTag.get());
+        return tagMapper.toDto(optionalTag.get());
     }
 
     @Override
@@ -54,7 +56,7 @@ public class TagServiceImpl implements TagService {
         if (optionalTag.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
         }
-        return TagMapper.INSTANCE.toDto(optionalTag.get());
+        return tagMapper.toDto(optionalTag.get());
     }
 
     @Override
@@ -63,14 +65,14 @@ public class TagServiceImpl implements TagService {
         if (tags.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40402));
         }
-        return TagMapper.INSTANCE.toDto(tags);
+        return tagMapper.toDto(tags);
     }
 
     @Override
     @Transactional
     public Tag update(long id, Tag updated) {
         this.getById(id);
-        this.tagRepository.update(id, TagMapper.INSTANCE.toEntity(updated));
+        this.tagRepository.update(id, tagMapper.toEntity(updated));
         return this.getById(id);
     }
 

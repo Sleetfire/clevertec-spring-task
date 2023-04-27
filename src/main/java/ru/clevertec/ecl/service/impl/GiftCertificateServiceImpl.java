@@ -21,9 +21,12 @@ import static ru.clevertec.ecl.util.ErrorMessage.NOT_FOUND_WITH_PARAMS;
 public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     private final GiftCertificateRepository giftCertificateDecoratorRepositoryImpl;
+    private final GiftCertificateMapper giftCertificateMapper;
 
-    public GiftCertificateServiceImpl(GiftCertificateRepository giftCertificateDecoratorRepositoryImpl) {
+    public GiftCertificateServiceImpl(GiftCertificateRepository giftCertificateDecoratorRepositoryImpl,
+                                      GiftCertificateMapper giftCertificateMapper) {
         this.giftCertificateDecoratorRepositoryImpl = giftCertificateDecoratorRepositoryImpl;
+        this.giftCertificateMapper = giftCertificateMapper;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         String currentDate = DateUtil.getCurrentDateISO8601();
         entity.setCreateDate(currentDate);
         entity.setLastUpdateDate(currentDate);
-        long certificateID = this.giftCertificateDecoratorRepositoryImpl.create(GiftCertificateMapper.INSTANCE.toEntity(entity));
+        long certificateID = this.giftCertificateDecoratorRepositoryImpl.create(giftCertificateMapper.toEntity(entity));
         return this.getById(certificateID);
     }
 
@@ -41,7 +44,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         if (optionalGiftCertificate.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
         }
-        return GiftCertificateMapper.INSTANCE.toDto(optionalGiftCertificate.get());
+        return giftCertificateMapper.toDto(optionalGiftCertificate.get());
     }
 
     @Override
@@ -50,7 +53,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         if (giftCertificates.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40402));
         }
-        return GiftCertificateMapper.INSTANCE.toDto(giftCertificates);
+        return giftCertificateMapper.toDto(giftCertificates);
     }
 
     @Override
@@ -59,13 +62,13 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         if (giftCertificates.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_WITH_PARAMS, 40403));
         }
-        return GiftCertificateMapper.INSTANCE.toDto(giftCertificates);
+        return giftCertificateMapper.toDto(giftCertificates);
     }
 
     @Override
     public GiftCertificate update(long id, GiftCertificate updatedEntity) {
         this.getById(id);
-        this.giftCertificateDecoratorRepositoryImpl.update(id, GiftCertificateMapper.INSTANCE.toEntity(updatedEntity));
+        this.giftCertificateDecoratorRepositoryImpl.update(id, giftCertificateMapper.toEntity(updatedEntity));
         return this.getById(id);
     }
 

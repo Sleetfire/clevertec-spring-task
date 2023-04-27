@@ -9,6 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface TagMapper {
+
     TagMapper INSTANCE = Mappers.getMapper(TagMapper.class);
 
     Tag toDto(TagEntity tagEntity);

@@ -9,6 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface GiftCertificateMapper {
+
     GiftCertificateMapper INSTANCE = Mappers.getMapper(GiftCertificateMapper.class);
 
     GiftCertificate toDto(GiftCertificateEntity giftCertificateEntity);
