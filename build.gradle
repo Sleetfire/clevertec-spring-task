@@ -42,7 +42,6 @@ dependencies {
 
 }
 
-
 gretty {
     httpPort = 8080
     contextPath = '/'
@@ -52,6 +51,10 @@ gretty {
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+compileJava {
+    options.compilerArgs << "-Amapstruct.defaultComponentModel=spring"
 }
 
 

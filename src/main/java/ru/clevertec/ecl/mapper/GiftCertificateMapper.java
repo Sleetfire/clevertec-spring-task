@@ -7,7 +7,7 @@ import ru.clevertec.ecl.repository.entity.GiftCertificateEntity;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface GiftCertificateMapper {
     GiftCertificateMapper INSTANCE = Mappers.getMapper(GiftCertificateMapper.class);
 

@@ -7,7 +7,7 @@ import ru.clevertec.ecl.repository.entity.TagEntity;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface TagMapper {
     TagMapper INSTANCE = Mappers.getMapper(TagMapper.class);
 
