@@ -27,7 +27,7 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    @PostMapping(value = {"", "/"},
+    @PostMapping(value = "/",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Tag> create(@RequestBody Tag tag) {
@@ -44,14 +44,14 @@ public class TagController {
         return new ResponseEntity<>(this.tagService.getAll(), HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/update/{id}",
+    @PatchMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Tag> update(@PathVariable long id, @RequestBody Tag tag) {
         return new ResponseEntity<>(this.tagService.update(id, tag), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id) {
         this.tagService.delete(id);
