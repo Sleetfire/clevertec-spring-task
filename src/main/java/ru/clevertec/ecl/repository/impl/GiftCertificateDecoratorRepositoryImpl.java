@@ -16,12 +16,12 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class GiftCertificateDecoratorRepositoryImpl implements GiftCertificateRepository {
 
-    private final GiftCertificateRepository giftCertificateRepository;
+    private final GiftCertificateRepository giftCertificateRepositoryImpl;
     private final TagRepository tagRepository;
 
-    public GiftCertificateDecoratorRepositoryImpl(GiftCertificateRepository giftCertificateRepository,
+    public GiftCertificateDecoratorRepositoryImpl(GiftCertificateRepository giftCertificateRepositoryImpl,
                                                   TagRepository tagRepository) {
-        this.giftCertificateRepository = giftCertificateRepository;
+        this.giftCertificateRepositoryImpl = giftCertificateRepositoryImpl;
         this.tagRepository = tagRepository;
     }
 
@@ -33,41 +33,41 @@ public class GiftCertificateDecoratorRepositoryImpl implements GiftCertificateRe
         List<TagEntity> tagEntitiesFromDb = this.getTags(tagsNames);
         entity.setTags(tagEntitiesFromDb);
 
-        return this.giftCertificateRepository.create(entity);
+        return this.giftCertificateRepositoryImpl.create(entity);
     }
 
     @Override
     public Optional<GiftCertificateEntity> getById(Long id) {
-        return this.giftCertificateRepository.getById(id);
+        return this.giftCertificateRepositoryImpl.getById(id);
     }
 
     @Override
     public List<GiftCertificateEntity> getAll() {
-        return this.giftCertificateRepository.getAll();
+        return this.giftCertificateRepositoryImpl.getAll();
     }
 
     @Override
     @Transactional
     public Long update(Long id, GiftCertificateEntity updatedEntity) {
         this.updateTags(updatedEntity);
-        return this.giftCertificateRepository.update(id, updatedEntity);
+        return this.giftCertificateRepositoryImpl.update(id, updatedEntity);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        this.giftCertificateRepository.delete(id);
+        this.giftCertificateRepositoryImpl.delete(id);
     }
 
     @Override
     public List<GiftCertificateEntity> getAll(GiftCertificateFilter filter) {
-        return this.giftCertificateRepository.getAll(filter);
+        return this.giftCertificateRepositoryImpl.getAll(filter);
     }
 
     @Override
     @Transactional
     public void delete() {
-        this.giftCertificateRepository.delete();
+        this.giftCertificateRepositoryImpl.delete();
     }
 
     private List<TagEntity> getTags(List<String> names) {

@@ -1,6 +1,5 @@
 package ru.clevertec.ecl.service.impl;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.GiftCertificate;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
@@ -18,11 +17,10 @@ import java.util.Optional;
 @Service
 public class GiftCertificateServiceImpl implements GiftCertificateService {
 
-    private final GiftCertificateRepository giftCertificateRepository;
+    private final GiftCertificateRepository giftCertificateDecoratorRepositoryImpl;
 
-    public GiftCertificateServiceImpl(@Qualifier("giftCertificateDecoratorRepositoryImpl")
-                                              GiftCertificateRepository giftCertificateRepository) {
-        this.giftCertificateRepository = giftCertificateRepository;
+    public GiftCertificateServiceImpl(GiftCertificateRepository giftCertificateDecoratorRepositoryImpl) {
+        this.giftCertificateDecoratorRepositoryImpl = giftCertificateDecoratorRepositoryImpl;
     }
 
     @Override
@@ -30,13 +28,13 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
         String currentDate = DateUtil.getCurrentDateISO8601();
         entity.setCreateDate(currentDate);
         entity.setLastUpdateDate(currentDate);
-        long certificateID = this.giftCertificateRepository.create(GiftCertificateMapper.INSTANCE.toEntity(entity));
+        long certificateID = this.giftCertificateDecoratorRepositoryImpl.create(GiftCertificateMapper.INSTANCE.toEntity(entity));
         return this.getById(certificateID);
     }
 
     @Override
     public GiftCertificate getById(long id) {
-        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateRepository.getById(id);
+        Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateDecoratorRepositoryImpl.getById(id);
         if (optionalGiftCertificate.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
                     40401));
@@ -46,7 +44,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     @Override
     public List<GiftCertificate> getAll() {
-        List<GiftCertificateEntity> giftCertificates = this.giftCertificateRepository.getAll();
+        List<GiftCertificateEntity> giftCertificates = this.giftCertificateDecoratorRepositoryImpl.getAll();
         if (giftCertificates.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
                     40402));
@@ -56,7 +54,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
 
     @Override
     public List<GiftCertificate> getAll(GiftCertificateFilter filter) {
-        List<GiftCertificateEntity> giftCertificates = this.giftCertificateRepository.getAll(filter);
+        List<GiftCertificateEntity> giftCertificates = this.giftCertificateDecoratorRepositoryImpl.getAll(filter);
         if (giftCertificates.isEmpty()) {
             throw new EssenceNotFoundException(SingleResponseError.of("Requested resource with current " +
                             "params was not found",
@@ -68,18 +66,18 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     @Override
     public GiftCertificate update(long id, GiftCertificate updatedEntity) {
         this.getById(id);
-        this.giftCertificateRepository.update(id, GiftCertificateMapper.INSTANCE.toEntity(updatedEntity));
+        this.giftCertificateDecoratorRepositoryImpl.update(id, GiftCertificateMapper.INSTANCE.toEntity(updatedEntity));
         return this.getById(id);
     }
 
     @Override
     public void delete(long id) {
         this.getById(id);
-        this.giftCertificateRepository.delete(id);
+        this.giftCertificateDecoratorRepositoryImpl.delete(id);
     }
 
     @Override
     public void delete() {
-        this.giftCertificateRepository.delete();
+        this.giftCertificateDecoratorRepositoryImpl.delete();
     }
 }
