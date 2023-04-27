@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.clevertec.ecl.dto.GiftCertificate;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
-import ru.clevertec.ecl.service.api.IGiftCertificateService;
+import ru.clevertec.ecl.service.GiftCertificateService;
 
 import java.util.List;
 
@@ -24,9 +24,9 @@ import java.util.List;
 @RequestMapping(value = "/certificates")
 public class GiftCertificateController {
 
-    private final IGiftCertificateService giftCertificateService;
+    private final GiftCertificateService giftCertificateService;
 
-    public GiftCertificateController(IGiftCertificateService giftCertificateService) {
+    public GiftCertificateController(GiftCertificateService giftCertificateService) {
         this.giftCertificateService = giftCertificateService;
     }
 

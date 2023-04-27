@@ -1,90 +1,66 @@
 package ru.clevertec.ecl.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.clevertec.ecl.dto.SingleResponseError;
 import ru.clevertec.ecl.dto.Tag;
-import ru.clevertec.ecl.exception.EssenceExistException;
-import ru.clevertec.ecl.exception.EssenceNotFoundException;
-import ru.clevertec.ecl.mapper.TagMapper;
-import ru.clevertec.ecl.repository.api.ITagRepository;
-import ru.clevertec.ecl.repository.entity.TagEntity;
-import ru.clevertec.ecl.service.api.ITagService;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-@Transactional(readOnly = true)
-public class TagService implements ITagService {
+/**
+ * Interface {@code ITagService} defines methods for CRUD operations with Tags
+ *
+ * @version 0.1
+ */
+public interface TagService extends CrudService<Tag> {
 
-    private final ITagRepository tagRepository;
-
-    public TagService(ITagRepository tagRepository) {
-        this.tagRepository = tagRepository;
-    }
-
+    /**
+     * Method for creating Tag entity
+     *
+     * @param tag entity to creating
+     * @return creating Tag entity
+     */
     @Override
-    @Transactional
-    public Tag create(Tag tag) {
-        String name = tag.getName();
-        Optional<TagEntity> optionalTag = this.tagRepository.getByName(name);
-        if (optionalTag.isPresent()) {
-            throw new EssenceExistException(SingleResponseError.of("Tag with that name is already existing",
-                    40001));
-        }
-        long tagId = this.tagRepository.create(TagMapper.INSTANCE.toEntity(tag));
-        return this.getById(tagId);
-    }
+    Tag create(Tag tag);
 
+    /**
+     * Method for getting Tag entity by id
+     * @param id entity's id
+     * @return Tag entity
+     */
     @Override
-    public Tag getById(long id) {
-        Optional<TagEntity> optionalTag = this.tagRepository.getById(id);
-        if (optionalTag.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40401));
-        }
-        return TagMapper.INSTANCE.toDto(optionalTag.get());
-    }
+    Tag getById(long id);
 
+    /**
+     * Method for getting all Tag entities
+     * @return list of Tag entities
+     */
     @Override
-    public Tag getByName(String name) {
-        Optional<TagEntity> optionalTag = this.tagRepository.getByName(name);
-        if (optionalTag.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40401));
-        }
-        return TagMapper.INSTANCE.toDto(optionalTag.get());
-    }
+    List<Tag> getAll();
 
+    /**
+     * Method for updating Tag entity
+     * @param id            entity's id
+     * @param updated entity with updated fields
+     * @return updated Tag entity
+     */
     @Override
-    public List<Tag> getAll() {
-        List<TagEntity> tags = this.tagRepository.getAll();
-        if (tags.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40402));
-        }
-        return TagMapper.INSTANCE.toDto(tags);
-    }
+    Tag update(long id, Tag updated);
 
+    /**
+     * Method for deleting Tag entity by id
+     * @param id entity's id
+     */
     @Override
-    @Transactional
-    public Tag update(long id, Tag updated) {
-        this.getById(id);
-        this.tagRepository.update(id, TagMapper.INSTANCE.toEntity(updated));
-        return this.getById(id);
-    }
+    void delete(long id);
 
-    @Override
-    @Transactional
-    public void delete(long id) {
-        this.getById(id);
-        this.tagRepository.delete(id);
-    }
+    /**
+     * Method for getting Tag entity by Tag name
+     * @param name Tag name
+     * @return Tag entity
+     */
+    Tag getByName(String name);
 
-    @Override
-    @Transactional
-    public void delete() {
-        this.delete();
-    }
+    /**
+     * Method for delete all Tag entities
+     */
+    void delete();
+
 }
