@@ -14,6 +14,9 @@ import ru.clevertec.ecl.service.TagService;
 import java.util.List;
 import java.util.Optional;
 
+import static ru.clevertec.ecl.util.ErrorMessage.NOT_FOUND_ERROR;
+import static ru.clevertec.ecl.util.ErrorMessage.TAG_EXISTING_ERROR;
+
 @Service
 @Transactional(readOnly = true)
 public class TagServiceImpl implements TagService {
@@ -30,8 +33,7 @@ public class TagServiceImpl implements TagService {
         String name = tag.getName();
         Optional<TagEntity> optionalTag = this.tagRepository.getByName(name);
         if (optionalTag.isPresent()) {
-            throw new EssenceExistException(SingleResponseError.of("Tag with that name is already existing",
-                    40001));
+            throw new EssenceExistException(SingleResponseError.of(TAG_EXISTING_ERROR, 40001));
         }
         long tagId = this.tagRepository.create(TagMapper.INSTANCE.toEntity(tag));
         return this.getById(tagId);
@@ -41,8 +43,7 @@ public class TagServiceImpl implements TagService {
     public Tag getById(long id) {
         Optional<TagEntity> optionalTag = this.tagRepository.getById(id);
         if (optionalTag.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40401));
+            throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
         }
         return TagMapper.INSTANCE.toDto(optionalTag.get());
     }
@@ -51,8 +52,7 @@ public class TagServiceImpl implements TagService {
     public Tag getByName(String name) {
         Optional<TagEntity> optionalTag = this.tagRepository.getByName(name);
         if (optionalTag.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40401));
+            throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
         }
         return TagMapper.INSTANCE.toDto(optionalTag.get());
     }
@@ -61,8 +61,7 @@ public class TagServiceImpl implements TagService {
     public List<Tag> getAll() {
         List<TagEntity> tags = this.tagRepository.getAll();
         if (tags.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40402));
+            throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40402));
         }
         return TagMapper.INSTANCE.toDto(tags);
     }

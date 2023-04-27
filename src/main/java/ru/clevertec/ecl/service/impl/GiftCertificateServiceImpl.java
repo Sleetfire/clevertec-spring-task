@@ -14,6 +14,9 @@ import ru.clevertec.ecl.util.DateUtil;
 import java.util.List;
 import java.util.Optional;
 
+import static ru.clevertec.ecl.util.ErrorMessage.NOT_FOUND_ERROR;
+import static ru.clevertec.ecl.util.ErrorMessage.NOT_FOUND_WITH_PARAMS;
+
 @Service
 public class GiftCertificateServiceImpl implements GiftCertificateService {
 
@@ -36,8 +39,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public GiftCertificate getById(long id) {
         Optional<GiftCertificateEntity> optionalGiftCertificate = this.giftCertificateDecoratorRepositoryImpl.getById(id);
         if (optionalGiftCertificate.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40401));
+            throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40401));
         }
         return GiftCertificateMapper.INSTANCE.toDto(optionalGiftCertificate.get());
     }
@@ -46,8 +48,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public List<GiftCertificate> getAll() {
         List<GiftCertificateEntity> giftCertificates = this.giftCertificateDecoratorRepositoryImpl.getAll();
         if (giftCertificates.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource was not found",
-                    40402));
+            throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_ERROR, 40402));
         }
         return GiftCertificateMapper.INSTANCE.toDto(giftCertificates);
     }
@@ -56,9 +57,7 @@ public class GiftCertificateServiceImpl implements GiftCertificateService {
     public List<GiftCertificate> getAll(GiftCertificateFilter filter) {
         List<GiftCertificateEntity> giftCertificates = this.giftCertificateDecoratorRepositoryImpl.getAll(filter);
         if (giftCertificates.isEmpty()) {
-            throw new EssenceNotFoundException(SingleResponseError.of("Requested resource with current " +
-                            "params was not found",
-                    40403));
+            throw new EssenceNotFoundException(SingleResponseError.of(NOT_FOUND_WITH_PARAMS, 40403));
         }
         return GiftCertificateMapper.INSTANCE.toDto(giftCertificates);
     }
