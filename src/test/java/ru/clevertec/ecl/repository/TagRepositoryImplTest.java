@@ -14,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.config.SpringTestJdbcConfig;
-import ru.clevertec.ecl.repository.api.ITagRepository;
 import ru.clevertec.ecl.repository.entity.TagEntity;
 
 import java.util.List;
@@ -28,10 +27,10 @@ import static org.assertj.core.api.Assertions.*;
 @Rollback
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-class TagRepositoryTest {
+class TagRepositoryImplTest {
 
     @Autowired
-    private ITagRepository tagRepository;
+    private TagRepository tagRepository;
 
     @BeforeEach
     void setUp() {

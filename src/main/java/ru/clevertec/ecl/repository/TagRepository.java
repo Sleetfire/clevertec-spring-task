@@ -1,99 +1,72 @@
 package ru.clevertec.ecl.repository;
 
-import org.hibernate.Session;
-import org.springframework.stereotype.Repository;
-import ru.clevertec.ecl.repository.api.ITagRepository;
-import ru.clevertec.ecl.repository.util.HibernateUtil;
 import ru.clevertec.ecl.repository.entity.TagEntity;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public class TagRepository implements ITagRepository {
+/**
+ * Interface {@code ITagRepository} defines methods for CRUD operations with TagEntity
+ *
+ * @version 1.0
+ */
+public interface TagRepository extends CrudRepository<Long, TagEntity> {
 
+    /**
+     * Method for creating TagEntity
+     *
+     * @param entity entity to creating
+     * @return created TagEntity's id
+     */
     @Override
-    public Long create(TagEntity entity) {
-        return HibernateUtil.saveEntity(entity);
-    }
+    Long create(TagEntity entity);
 
+    /**
+     * Method for getting TagEntity by id
+     *
+     * @param id entity's id
+     * @return TagEntity in Optional wrapper
+     */
     @Override
-    public Optional<TagEntity> getById(Long id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<TagEntity> selectCriteriaQuery = cb.createQuery(TagEntity.class);
-        Root<TagEntity> root = selectCriteriaQuery.from(TagEntity.class);
-        selectCriteriaQuery.select(root).where(
-                cb.equal(root.get("id"), id)
-        );
-        return HibernateUtil.getSingleEntity(session, selectCriteriaQuery);
-    }
+    Optional<TagEntity> getById(Long id);
 
+    /**
+     * Method for getting all TagEntities
+     *
+     * @return list of TagEntities
+     */
     @Override
-    public List<TagEntity> getAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<TagEntity> selectCriteriaQuery = cb.createQuery(TagEntity.class);
-        Root<TagEntity> root = selectCriteriaQuery.from(TagEntity.class);
-        selectCriteriaQuery.select(root);
-        return HibernateUtil.getAllEntities(session, selectCriteriaQuery);
-    }
+    List<TagEntity> getAll();
 
+    /**
+     * Method for updating entity
+     *
+     * @param id      entity's id
+     * @param updated entity with updated fields
+     * @return updated TagEntity's id
+     */
     @Override
-    public Long update(Long id, TagEntity updated) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaUpdate<TagEntity> criteriaUpdate = cb.createCriteriaUpdate(TagEntity.class);
-        Root<TagEntity> root = criteriaUpdate.from(TagEntity.class);
+    Long update(Long id, TagEntity updated);
 
-        String tagName = updated.getName();
-        if (tagName != null) {
-            criteriaUpdate.set("name", tagName);
-        }
-        criteriaUpdate.where(
-                cb.equal(root.get("id"), id)
-        );
-
-        HibernateUtil.updateEntity(session, criteriaUpdate);
-        return id;
-    }
-
+    /**
+     * Method for deleting TagEntity by id
+     *
+     * @param id entity's id
+     */
     @Override
-    public void delete(Long id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaDelete<TagEntity> criteriaDelete = cb.createCriteriaDelete(TagEntity.class);
-        Root<TagEntity> root = criteriaDelete.from(TagEntity.class);
-        criteriaDelete.where(
-                cb.equal(root.get("id"), id)
-        );
-        HibernateUtil.deleteEntity(session, criteriaDelete);
-    }
+    void delete(Long id);
 
-    @Override
-    public Optional<TagEntity> getByName(String name) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<TagEntity> tagCriteriaQuery = cb.createQuery(TagEntity.class);
-        Root<TagEntity> root = tagCriteriaQuery.from(TagEntity.class);
-        tagCriteriaQuery.select(root).where(
-                cb.equal(root.get("name"), name)
-        );
-        return HibernateUtil.getSingleEntity(session, tagCriteriaQuery);
-    }
+    /**
+     * Method for getting TagEntity by name
+     *
+     * @param name TagEntity's name
+     * @return TagEntity in Optional wrapper
+     */
+    Optional<TagEntity> getByName(String name);
 
-    @Override
-    public void delete() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaDelete<TagEntity> criteriaDelete = cb.createCriteriaDelete(TagEntity.class);
-        criteriaDelete.from(TagEntity.class);
-        HibernateUtil.deleteEntity(session, criteriaDelete);
-    }
+    /**
+     * Method for deleting all TagEntities
+     */
+    void delete();
 
 }

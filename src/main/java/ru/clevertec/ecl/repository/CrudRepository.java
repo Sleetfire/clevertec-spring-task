@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.repository.api;
+package ru.clevertec.ecl.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import java.util.Optional;
  * @param <E> entity type
  * @version 1.0
  */
-public interface ICrudRepository<T, E> {
+public interface CrudRepository<T, E> {
 
     /**
      * Method for creating entity

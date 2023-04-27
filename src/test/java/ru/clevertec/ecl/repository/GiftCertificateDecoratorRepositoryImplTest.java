@@ -16,7 +16,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.config.SpringTestJdbcConfig;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
-import ru.clevertec.ecl.repository.api.IGiftCertificateRepository;
 import ru.clevertec.ecl.repository.entity.GiftCertificateEntity;
 import ru.clevertec.ecl.repository.entity.TagEntity;
 import ru.clevertec.ecl.util.DateUtil;
@@ -34,11 +33,11 @@ import static org.assertj.core.api.Assertions.*;
 @Rollback
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-class GiftCertificateDecoratorRepositoryTest {
+class GiftCertificateDecoratorRepositoryImplTest {
 
     @Autowired
-    @Qualifier("giftCertificateDecoratorRepository")
-    private IGiftCertificateRepository giftCertificateRepository;
+    @Qualifier("giftCertificateDecoratorRepositoryImpl")
+    private GiftCertificateRepository giftCertificateRepository;
 
     @BeforeEach
     void setUp() {
@@ -171,8 +170,8 @@ class GiftCertificateDecoratorRepositoryTest {
 
     static Stream<GiftCertificateEntity> getGiftCertificateEntity() {
         TagEntity tagEntity1 = TagEntity.builder().id(1L).name("first_tag").build();
-        TagEntity tagEntity2 = TagEntity.builder().id(2).name("second_tag").build();
-        TagEntity tagEntity3 = TagEntity.builder().id(3).name("third_tag").build();
+        TagEntity tagEntity2 = TagEntity.builder().id(2L).name("second_tag").build();
+        TagEntity tagEntity3 = TagEntity.builder().id(3L).name("third_tag").build();
         List<TagEntity> tags = List.of(tagEntity1, tagEntity2, tagEntity3);
         GiftCertificateEntity giftCertificateEntity = GiftCertificateEntity.builder()
                 .name("gift")

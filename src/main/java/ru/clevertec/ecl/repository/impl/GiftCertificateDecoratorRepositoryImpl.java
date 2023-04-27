@@ -1,10 +1,10 @@
-package ru.clevertec.ecl.repository;
+package ru.clevertec.ecl.repository.impl;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.GiftCertificateFilter;
-import ru.clevertec.ecl.repository.api.IGiftCertificateRepository;
-import ru.clevertec.ecl.repository.api.ITagRepository;
+import ru.clevertec.ecl.repository.GiftCertificateRepository;
+import ru.clevertec.ecl.repository.TagRepository;
 import ru.clevertec.ecl.repository.entity.GiftCertificateEntity;
 import ru.clevertec.ecl.repository.entity.TagEntity;
 
@@ -14,13 +14,13 @@ import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
-public class GiftCertificateDecoratorRepository implements IGiftCertificateRepository {
+public class GiftCertificateDecoratorRepositoryImpl implements GiftCertificateRepository {
 
-    private final IGiftCertificateRepository giftCertificateRepository;
-    private final ITagRepository tagRepository;
+    private final GiftCertificateRepository giftCertificateRepository;
+    private final TagRepository tagRepository;
 
-    public GiftCertificateDecoratorRepository(IGiftCertificateRepository giftCertificateRepository,
-                                              ITagRepository tagRepository) {
+    public GiftCertificateDecoratorRepositoryImpl(GiftCertificateRepository giftCertificateRepository,
+                                                  TagRepository tagRepository) {
         this.giftCertificateRepository = giftCertificateRepository;
         this.tagRepository = tagRepository;
     }
