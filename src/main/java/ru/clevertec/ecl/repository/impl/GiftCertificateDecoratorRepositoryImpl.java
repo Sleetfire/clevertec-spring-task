@@ -26,6 +26,7 @@ public class GiftCertificateDecoratorRepositoryImpl implements GiftCertificateRe
     }
 
     @Override
+    @Transactional
     public Long create(GiftCertificateEntity entity) {
         List<TagEntity> tagEntities = entity.getTags();
         List<String> tagsNames = tagEntities.stream().map(TagEntity::getName).toList();
@@ -46,12 +47,14 @@ public class GiftCertificateDecoratorRepositoryImpl implements GiftCertificateRe
     }
 
     @Override
+    @Transactional
     public Long update(Long id, GiftCertificateEntity updatedEntity) {
         this.updateTags(updatedEntity);
         return this.giftCertificateRepository.update(id, updatedEntity);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         this.giftCertificateRepository.delete(id);
     }
@@ -62,6 +65,7 @@ public class GiftCertificateDecoratorRepositoryImpl implements GiftCertificateRe
     }
 
     @Override
+    @Transactional
     public void delete() {
         this.giftCertificateRepository.delete();
     }
