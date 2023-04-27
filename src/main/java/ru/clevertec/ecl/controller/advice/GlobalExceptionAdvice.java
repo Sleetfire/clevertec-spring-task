@@ -8,7 +8,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.clevertec.ecl.dto.SingleResponseError;
 import ru.clevertec.ecl.exception.EssenceExistException;
 import ru.clevertec.ecl.exception.EssenceNotFoundException;
-import ru.clevertec.ecl.exception.SqlException;
 
 @ControllerAdvice
 public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {
@@ -21,11 +20,6 @@ public class GlobalExceptionAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EssenceNotFoundException.class)
     public ResponseEntity<SingleResponseError> handleEssenceNotFoundException(EssenceNotFoundException e) {
         return new ResponseEntity<>(e.getError(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(SqlException.class)
-    public ResponseEntity<SingleResponseError> handleSqlException(SqlException e) {
-        return new ResponseEntity<>(e.getError(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
